@@ -1,0 +1,30 @@
+/*
+ * BRich Brand Book v1.0 — tokens oficiales (pág. 11).
+ * Fuente única de verdad para colores, tipografía, radios y espaciado.
+ * No modificar estos valores sin aprobación de BRich.
+ */
+:root {
+  --brich-blue: #1c96bc;
+  --brich-navy: #0b1726;
+  --brich-white: #ffffff;
+  --brich-ice: #edf3f6;
+  --brich-steel: #7f97a6;
+  --brich-cyan: #5cd4e8;
+
+  --text-primary: #0b1726;
+  --text-secondary: #526779;
+  --border-subtle: #d9e3e9;
+  --surface-muted: #f7fafc;
+
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --space-unit: 8px;
+
+  /* Derivados para fondos navy (texto secundario y líneas). */
+  --on-navy-muted: #b7c4ce;
+  --line-on-navy: rgba(255, 255, 255, 0.12);
+  --error: #b42318;
+}
