@@ -12,6 +12,7 @@ export function Header() {
           <li><Link href="/#sistemas">Sistemas</Link></li>
           <li><Link href="/#proceso">Proceso</Link></li>
           <li><Link href="/#portal">Portal</Link></li>
+          <li><Link href="/login">Ingresar</Link></li>
         </ul>
         <Link className="btn btn-primary" href="/#diagnostico">
           Pedir diagnóstico

@@ -24,7 +24,11 @@ Plataforma web de BRich System: catálogo público de sistemas de automatizació
 - Nunca poner claves privadas (service_role de Supabase, secretos de n8n) en código del navegador ni en el repositorio. Solo variables de entorno del servidor.
 
 ## Estructura
-- `src/app/` páginas (inicio, `/sistemas/[slug]`)
+- `src/app/(site)/` web pública (inicio, `/sistemas/[slug]`)
+- `src/app/login/` y `src/app/portal/` portal privado (Supabase Auth; `src/middleware.ts` protege /portal)
+- `src/lib/supabase/` clientes de Supabase (solo clave publicable)
+- `src/lib/portal.ts` consultas y cálculos del dashboard
+- `supabase/migrations/` SQL de tablas y RLS (cada usuario lee solo su empresa; escrituras solo desde n8n)
 - `src/components/` componentes reutilizables
 - `src/lib/systems.ts` contenido del catálogo (editar aquí los textos de los sistemas)
 - `src/styles/tokens.css` tokens oficiales de marca

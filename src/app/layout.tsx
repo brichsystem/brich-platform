@@ -8,8 +8,6 @@ import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 import "@/styles/tokens.css";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { Icons } from "@/components/Icons";
 
 export const metadata: Metadata = {
@@ -26,9 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es">
       <body>
         <Icons />
-        <Header />
-        <main id="inicio">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
