@@ -7,6 +7,7 @@ Los archivos de `migrations/` se ejecutan en orden desde **Supabase → SQL Edit
 | `0001_estructura_y_seguridad.sql` | Crea tablas y reglas de aislamiento por empresa (RLS) | Una vez |
 | `0002_datos_demostrativos.sql` | Crea "Empresa Demo A" y "Empresa Demo B" con datos ficticios | Una vez |
 | `0003_asignar_usuarios_demo.sql` | Asocia los usuarios de prueba a su empresa | Después de crear los usuarios |
+| `0004_registro_de_prospectos.sql` | Crea la empresa BRich y la función `register_web_lead` (solo n8n puede usarla) | Una vez |
 
 ## Modelo de seguridad
 - Cada usuario solo puede **leer** los datos de su empresa (`current_company_id()`).

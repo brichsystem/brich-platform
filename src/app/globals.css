@@ -193,3 +193,11 @@ img { max-width: 100%; }
 .login-card .eyebrow { color: var(--brich-blue); }
 .login-form { border: 0; padding: 16px 0 0; }
 .login-help { font-size: 13px; color: var(--text-secondary); }
+
+/* Formulario: estados */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-legal { font-size: 13px; color: var(--text-secondary); }
+.form-sent { align-content: start; }
+.form-sent h3 { font-weight: 700; font-size: 24px; }
+.form-sent p { color: var(--text-secondary); }
+.form-sent .btn { justify-self: start; }

@@ -28,6 +28,8 @@ Plataforma web de BRich System: catálogo público de sistemas de automatizació
 - `src/app/login/` y `src/app/portal/` portal privado (Supabase Auth; `src/middleware.ts` protege /portal)
 - `src/lib/supabase/` clientes de Supabase (solo clave publicable)
 - `src/lib/portal.ts` consultas y cálculos del dashboard
+- `src/app/api/leads/` recibe el formulario y lo envía a n8n (N8N_LEAD_WEBHOOK_URL + N8N_WEBHOOK_SECRET, solo servidor)
+- `n8n/` flujos de n8n exportados (sin credenciales)
 - `supabase/migrations/` SQL de tablas y RLS (cada usuario lee solo su empresa; escrituras solo desde n8n)
 - `src/components/` componentes reutilizables
 - `src/lib/systems.ts` contenido del catálogo (editar aquí los textos de los sistemas)

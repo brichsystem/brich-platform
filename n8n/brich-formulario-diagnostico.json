@@ -1,0 +1,59 @@
+{
+  "name": "BRich · Formulario de diagnóstico → Supabase",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "brich-lead",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "5b1f3c2e-1a0d-4c8e-9a51-0f6b2d7e9a01",
+      "name": "Formulario web",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "8d6f2a4c-3b7e-4f1a-9c2d-5e8b1a7f3c90"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://tufcuetmuosqvkfwhfpr.supabase.co/rest/v1/rpc/register_web_lead",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ p_company_slug: 'brich', p_name: $json.body.name, p_company_name: $json.body.company, p_phone: $json.body.phone, p_email: $json.body.email, p_interest: $json.body.system, p_message: $json.body.message, p_source: 'web_form' }) }}",
+        "options": {}
+      },
+      "id": "a3c7e9b1-6d2f-4e8a-b5c3-1f9d7e2a4b02",
+      "name": "Guardar en Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [260, 0]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"ok\": true\n}",
+        "options": {}
+      },
+      "id": "c9e2a7f4-8b1d-4a6c-9e3f-2d5b8c1a7e03",
+      "name": "Responder OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [520, 0]
+    }
+  ],
+  "connections": {
+    "Formulario web": {
+      "main": [[{ "node": "Guardar en Supabase", "type": "main", "index": 0 }]]
+    },
+    "Guardar en Supabase": {
+      "main": [[{ "node": "Responder OK", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "pinData": {}
+}

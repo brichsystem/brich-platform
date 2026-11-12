@@ -2,35 +2,63 @@
 
 import { useState } from "react";
 import { systems } from "@/lib/systems";
+import { normalizeLead, validateLead, type LeadErrors } from "@/lib/lead";
 
-type Errors = Partial<Record<"name" | "company" | "phone" | "email", string>>;
-
-function validate(d: Record<string, string>): Errors {
-  const e: Errors = {};
-  if (!d.name?.trim()) e.name = "Escribe tu nombre.";
-  if (!d.company?.trim()) e.company = "Escribe el nombre de tu empresa.";
-  if (!/^\+?[\d\s-]{7,}$/.test(d.phone?.trim() ?? "")) e.phone = "Escribe un WhatsApp válido, por ejemplo +593 99 999 9999.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email?.trim() ?? "")) e.email = "Escribe un correo válido.";
-  return e;
-}
+type Status = "idle" | "sending" | "sent" | "error";
 
 /**
  * Formulario de diagnóstico.
- * ETAPA 1: valida los datos pero NO los envía. En la etapa 3 se conecta a /api/leads → n8n → Supabase.
+ * Envía a /api/leads → n8n → Supabase. Muestra estados de envío, éxito y error.
  */
 export function DiagnosticForm({ defaultSystem }: { defaultSystem?: string }) {
-  const [errors, setErrors] = useState<Errors>({});
-  const [valid, setValid] = useState(false);
+  const [errors, setErrors] = useState<LeadErrors>({});
+  const [status, setStatus] = useState<Status>("idle");
+  const [serverError, setServerError] = useState("");
 
-  function onSubmit(ev: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(ev: React.FormEvent<HTMLFormElement>) {
     ev.preventDefault();
-    const data = Object.fromEntries(new FormData(ev.currentTarget)) as Record<string, string>;
-    const e = validate(data);
+    const form = ev.currentTarget;
+    const raw = Object.fromEntries(new FormData(form)) as Record<string, string>;
+    const e = validateLead(normalizeLead(raw));
     setErrors(e);
-    setValid(Object.keys(e).length === 0);
+    if (Object.keys(e).length > 0) return;
+
+    setStatus("sending");
+    setServerError("");
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(raw),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        setStatus("sent");
+        form.reset();
+        return;
+      }
+      if (data.errors) setErrors(data.errors);
+      setServerError(data.error ?? "Revisa los datos marcados e inténtalo de nuevo.");
+      setStatus("error");
+    } catch {
+      setServerError("No hay conexión. Revisa tu internet e inténtalo de nuevo.");
+      setStatus("error");
+    }
   }
 
-  const field = (name: keyof Errors, label: string, props: React.InputHTMLAttributes<HTMLInputElement>) => (
+  if (status === "sent") {
+    return (
+      <div className="form form-sent" role="status">
+        <h3>Recibimos tu solicitud</h3>
+        <p>El equipo de BRich revisará tus datos y te contactará por WhatsApp o correo para agendar el diagnóstico.</p>
+        <button className="btn btn-navy" type="button" onClick={() => setStatus("idle")}>
+          Enviar otra solicitud
+        </button>
+      </div>
+    );
+  }
+
+  const field = (name: keyof LeadErrors, label: string, props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <div className="field">
       <label htmlFor={`f-${name}`}>{label}</label>
       <input
@@ -47,12 +75,12 @@ export function DiagnosticForm({ defaultSystem }: { defaultSystem?: string }) {
   return (
     <form className="form" onSubmit={onSubmit} noValidate>
       <div className="row">
-        {field("name", "Nombre", { autoComplete: "name" })}
-        {field("company", "Empresa", { autoComplete: "organization" })}
+        {field("name", "Nombre", { autoComplete: "name", maxLength: 120 })}
+        {field("company", "Empresa", { autoComplete: "organization", maxLength: 160 })}
       </div>
       <div className="row">
-        {field("phone", "WhatsApp", { type: "tel", autoComplete: "tel", placeholder: "+593 99 999 9999" })}
-        {field("email", "Correo", { type: "email", autoComplete: "email" })}
+        {field("phone", "WhatsApp", { type: "tel", autoComplete: "tel", placeholder: "+593 99 999 9999", maxLength: 20 })}
+        {field("email", "Correo", { type: "email", autoComplete: "email", maxLength: 160 })}
       </div>
       <div className="field">
         <label htmlFor="f-system">¿Qué te interesa?</label>
@@ -65,13 +93,21 @@ export function DiagnosticForm({ defaultSystem }: { defaultSystem?: string }) {
       </div>
       <div className="field">
         <label htmlFor="f-message">¿Cuál es tu mayor problema hoy? (opcional)</label>
-        <textarea id="f-message" name="message" />
+        <textarea id="f-message" name="message" maxLength={2000} />
       </div>
-      <button className="btn btn-primary" type="submit">Pedir diagnóstico</button>
-      <p className={`notice${valid ? " ok" : ""}`} role="status">
-        {valid
-          ? "Datos válidos. En esta versión no se envió nada; el envío real se activa en la etapa 3."
-          : "Versión en construcción: el formulario valida los datos, pero todavía no los envía."}
+      {/* Campo trampa para bots: invisible para las personas */}
+      <div className="hp" aria-hidden="true">
+        <label htmlFor="f-website">No llenar</label>
+        <input id="f-website" name="website" tabIndex={-1} autoComplete="off" />
+      </div>
+      {status === "error" && serverError && (
+        <p className="form-error" role="alert">{serverError}</p>
+      )}
+      <button className="btn btn-primary" type="submit" disabled={status === "sending"}>
+        {status === "sending" ? "Enviando…" : "Pedir diagnóstico"}
+      </button>
+      <p className="form-legal">
+        Usaremos tus datos solo para contactarte sobre el diagnóstico.
       </p>
     </form>
   );
