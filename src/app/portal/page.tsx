@@ -1,4 +1,6 @@
-import { getSessionContext, summarize, fmtDate, fmtDateTime, LEAD_STATUS, RUN_STATUS, SYSTEM_NAME, type Lead, type Run } from "@/lib/portal";
+import Link from "next/link";
+import { getSessionContext, summarize, fmtDateTime, RUN_STATUS, SYSTEM_NAME, type Lead, type Run } from "@/lib/portal";
+import { LeadsTable } from "./LeadsTable";
 
 export default async function PortalHome() {
   const { supabase, profile, company } = await getSessionContext();
@@ -100,28 +102,14 @@ export default async function PortalHome() {
       </section>
 
       <section className="p-card p-table" aria-label="Prospectos recientes">
-        <div className="p-card-head"><h2>Prospectos recientes</h2><span className="p-note">{leads.length} en total</span></div>
+        <div className="p-card-head">
+          <h2>Prospectos recientes</h2>
+          <Link className="p-link" href="/portal/prospectos">Ver los {leads.length} prospectos →</Link>
+        </div>
         {recent.length === 0 ? (
           <p className="p-muted">Aún no hay prospectos.</p>
         ) : (
-          <div className="p-scroll">
-            <table>
-              <thead>
-                <tr><th>Prospecto</th><th>Interés</th><th>Estado</th><th>Responsable</th><th>Fecha</th></tr>
-              </thead>
-              <tbody>
-                {recent.map((l) => (
-                  <tr key={l.id}>
-                    <td><b>{l.name}</b>{l.company_name && <small>{l.company_name}</small>}</td>
-                    <td>{l.interest ?? "—"}</td>
-                    <td><span className={`pill lead-${l.status}`}>{LEAD_STATUS[l.status]}</span></td>
-                    <td>{l.assigned_to ?? "Sin asignar"}</td>
-                    <td className="num">{fmtDate(l.created_at)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <LeadsTable leads={recent} />
         )}
       </section>
     </div>

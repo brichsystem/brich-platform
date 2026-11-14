@@ -71,3 +71,30 @@
 .p-empty { background: var(--brich-white); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); padding: 40px 24px; display: grid; gap: 12px; max-width: 640px; }
 .p-empty h1 { font-size: 24px; font-weight: 700; }
 .p-empty p { color: var(--text-secondary); }
+
+/* Navegación del portal */
+.portal-nav { display: flex; gap: 8px; }
+.portal-nav a { color: var(--on-navy-muted); text-decoration: none; font-weight: 600; font-size: 15px; padding: 8px 12px; border-radius: 8px; }
+.portal-nav a:hover { color: var(--brich-white); }
+.portal-nav a[aria-current="page"] { color: var(--brich-white); background: var(--line-on-navy); }
+@media (max-width: 560px) { .portal-nav a { padding: 8px; font-size: 14px; } }
+
+/* Selector de estado: mismo aspecto que las etiquetas, pero se puede cambiar */
+.status-cell { display: grid; gap: 4px; justify-items: start; }
+.status-select { font: inherit; font-size: 13px; font-weight: 600; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border-subtle); cursor: pointer; }
+.status-select:disabled { opacity: 0.6; cursor: wait; }
+.status-select:focus-visible { outline: 2px solid var(--brich-blue); outline-offset: 2px; }
+.status-saving { font-size: 12px; color: var(--text-secondary); }
+.status-cell .form-error { font-size: 12px; max-width: 200px; }
+
+.p-link { font-size: 14px; font-weight: 600; color: var(--brich-blue); text-decoration: none; }
+.p-link:hover { text-decoration: underline; }
+.p-contact { display: block; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Filtros por estado */
+.p-filters { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+.p-filters a { display: inline-flex; gap: 8px; align-items: center; padding: 8px 16px; border-radius: 999px; background: var(--brich-white); border: 1px solid var(--border-subtle); color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 600; }
+.p-filters a span { color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.p-filters a:hover { border-color: var(--brich-blue); }
+.p-filters a.on { background: var(--brich-navy); border-color: var(--brich-navy); color: var(--brich-white); }
+.p-filters a.on span { color: var(--on-navy-muted); }

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { getSessionContext } from "@/lib/portal";
 import { logout } from "@/app/login/actions";
+import { PortalNav } from "./PortalNav";
 import "./portal.css";
 
 export const metadata: Metadata = { title: "Portal", robots: { index: false } };
@@ -17,6 +18,7 @@ export default async function PortalLayout({ children }: { children: React.React
       <header className="portal-bar">
         <div className="portal-wrap portal-bar-inner">
           <Link href="/portal" aria-label="Inicio del portal"><Logo height={36} /></Link>
+          {company && <PortalNav />}
           <div className="portal-user">
             <span className="portal-company">{company?.name ?? "Sin empresa asignada"}</span>
             <span className="portal-email">{profile?.full_name ?? user.email}</span>

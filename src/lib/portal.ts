@@ -1,4 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
+import { LEAD_STATUS, type LeadStatus } from "@/lib/lead-status";
+
+export { LEAD_STATUS };
 
 export type Company = { id: string; name: string; is_demo: boolean };
 export type Profile = { id: string; full_name: string | null; role: string; company_id: string };
@@ -7,9 +10,11 @@ export type Lead = {
   name: string;
   company_name: string | null;
   interest: string | null;
-  status: "nuevo" | "contactado" | "en_seguimiento" | "ganado" | "perdido";
+  status: LeadStatus;
   source: string;
   assigned_to: string | null;
+  phone?: string | null;
+  email?: string | null;
   created_at: string;
 };
 export type Run = {
@@ -21,13 +26,6 @@ export type Run = {
   ran_at: string;
 };
 
-export const LEAD_STATUS: Record<Lead["status"], string> = {
-  nuevo: "Nuevo",
-  contactado: "Contactado",
-  en_seguimiento: "En seguimiento",
-  ganado: "Ganado",
-  perdido: "Perdido",
-};
 export const RUN_STATUS: Record<Run["status"], string> = { ok: "Funcionando", error: "Con error", en_proceso: "En proceso" };
 export const SYSTEM_NAME: Record<Run["system"], string> = {
   sales: "Sales System",
