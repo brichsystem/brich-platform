@@ -1,0 +1,25 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "sendTo": "brich.system@gmail.com",
+        "subject": "=Nuevo prospecto: {{ $('Formulario web').item.json.body.name }} ({{ $('Formulario web').item.json.body.company }})",
+        "emailType": "text",
+        "message": "=Llegó un nuevo prospecto desde el formulario de diagnóstico de la web.\n\nNombre: {{ $('Formulario web').item.json.body.name }}\nEmpresa: {{ $('Formulario web').item.json.body.company }}\nWhatsApp: {{ $('Formulario web').item.json.body.phone }}\nCorreo: {{ $('Formulario web').item.json.body.email }}\nLe interesa: {{ $('Formulario web').item.json.body.system }}\nMayor problema: {{ $('Formulario web').item.json.body.message || 'No lo indicó' }}\n\nVer en el panel: https://brich-platform.vercel.app/portal",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "e4b8d2f6-7a3c-4e1b-8d9f-3c6a1b5e7f04",
+      "name": "Enviar aviso por correo",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        0
+      ],
+      "webhookId": "b7e3c9a1-4d6f-4a2e-9b8c-6f1d3e5a7c21"
+    }
+  ],
+  "connections": {}
+}
