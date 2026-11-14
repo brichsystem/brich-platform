@@ -104,7 +104,7 @@ export default async function PortalHome() {
       <section className="p-card p-table" aria-label="Prospectos recientes">
         <div className="p-card-head">
           <h2>Prospectos recientes</h2>
-          <Link className="p-link" href="/portal/prospectos">Ver los {leads.length} prospectos →</Link>
+          <Link className="p-link" href="/portal/prospectos">Ver todos ({leads.length}) →</Link>
         </div>
         {recent.length === 0 ? (
           <p className="p-muted">Aún no hay prospectos.</p>
