@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { systems } from "@/lib/systems";
 import { normalizeLead, validateLead, type LeadErrors } from "@/lib/lead";
 import { COUNTRIES, fullPhone } from "@/lib/countries";
@@ -17,6 +17,11 @@ export function DiagnosticForm({ defaultSystem }: { defaultSystem?: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState("");
   const [country, setCountry] = useState(COUNTRIES[0]);
+  // Momento en que el formulario apareció en pantalla (prueba de tiempo contra bots).
+  const shownAt = useRef(0);
+  useEffect(() => {
+    shownAt.current = Date.now();
+  }, []);
 
   async function onSubmit(ev: React.FormEvent<HTMLFormElement>) {
     ev.preventDefault();
@@ -33,7 +38,7 @@ export function DiagnosticForm({ defaultSystem }: { defaultSystem?: string }) {
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(raw),
+        body: JSON.stringify({ ...raw, elapsedMs: shownAt.current ? Date.now() - shownAt.current : 0 }),
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.ok) {
