@@ -63,7 +63,7 @@
     {
       "parameters": {
         "sendTo": "brich.system@gmail.com",
-        "subject": "=Nuevo prospecto: {{ $('Formulario web').item.json.body.name }} ({{ $('Formulario web').item.json.body.company }})",
+        "subject": "={{ /\"repetido\":\\s*true/.test($('Guardar en Supabase').item.json.data) ? 'Volvió a escribir' : 'Nuevo prospecto' }}: {{ $('Formulario web').item.json.body.name }} ({{ $('Formulario web').item.json.body.company }})",
         "emailType": "text",
         "message": "=Llegó un nuevo prospecto desde el formulario de diagnóstico de la web.\n\nNombre: {{ $('Formulario web').item.json.body.name }}\nEmpresa: {{ $('Formulario web').item.json.body.company }}\nWhatsApp: {{ $('Formulario web').item.json.body.phone }}\nCorreo: {{ $('Formulario web').item.json.body.email }}\nLe interesa: {{ $('Formulario web').item.json.body.system }}\nMayor problema: {{ $('Formulario web').item.json.body.message || 'No lo indicó' }}\n\nVer en el panel: https://brich-platform.vercel.app/portal",
         "options": {

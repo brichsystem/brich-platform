@@ -19,7 +19,11 @@ export function LeadsTable({ leads, showContact = false }: { leads: Lead[]; show
         <tbody>
           {leads.map((l) => (
             <tr key={l.id}>
-              <td><b>{l.name}</b>{l.company_name && <small>{l.company_name}</small>}</td>
+              <td>
+                <b>{l.name}</b>
+                {l.company_name && <small>{l.company_name}</small>}
+                {(l.contact_count ?? 1) > 1 && <span className="p-repeat">Escribió {l.contact_count} veces</span>}
+              </td>
               {showContact && (
                 <td>
                   {l.phone && <span className="p-contact">{l.phone}</span>}

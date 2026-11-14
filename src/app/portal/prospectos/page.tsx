@@ -22,7 +22,7 @@ export default async function ProspectosPage({ searchParams }: { searchParams: P
 
   const { data, error } = await supabase
     .from("leads")
-    .select("id, name, company_name, phone, email, interest, status, source, assigned_to, created_at")
+    .select("*")
     .eq("company_id", company.id)
     .order("created_at", { ascending: false })
     .limit(1000)

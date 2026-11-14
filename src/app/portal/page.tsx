@@ -17,7 +17,7 @@ export default async function PortalHome() {
   const [leadsRes, runsRes] = await Promise.all([
     supabase
       .from("leads")
-      .select("id, name, company_name, interest, status, source, assigned_to, created_at")
+      .select("*")
       .eq("company_id", company.id)
       .order("created_at", { ascending: false })
       .limit(1000)

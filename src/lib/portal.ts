@@ -15,6 +15,7 @@ export type Lead = {
   assigned_to: string | null;
   phone?: string | null;
   email?: string | null;
+  contact_count?: number;
   created_at: string;
 };
 export type Run = {

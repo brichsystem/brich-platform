@@ -98,3 +98,6 @@
 .p-filters a:hover { border-color: var(--brich-blue); }
 .p-filters a.on { background: var(--brich-navy); border-color: var(--brich-navy); color: var(--brich-white); }
 .p-filters a.on span { color: var(--on-navy-muted); }
+
+/* Prospecto que escribió más de una vez */
+.p-repeat { display: inline-block; margin-top: 4px; font-size: 12px; font-weight: 600; color: var(--brich-navy); background: rgba(92, 212, 232, 0.25); border-radius: 999px; padding: 2px 8px; }
