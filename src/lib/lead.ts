@@ -23,7 +23,9 @@ export function validateLead(d: LeadInput): LeadErrors {
   const e: LeadErrors = {};
   if (!d.name) e.name = "Escribe tu nombre.";
   if (!d.company) e.company = "Escribe el nombre de tu empresa.";
-  if (!/^\+?[\d\s-]{7,20}$/.test(d.phone)) e.phone = "Escribe un WhatsApp válido, por ejemplo +593 99 999 9999.";
+  const digits = d.phone.replace(/\D/g, "").length;
+  if (!/^\+?[\d\s-]+$/.test(d.phone) || digits < 8 || digits > 15)
+    e.phone = "Escribe tu número de WhatsApp sin el código de país, por ejemplo 99 999 9999.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) e.email = "Escribe un correo válido.";
   return e;
 }

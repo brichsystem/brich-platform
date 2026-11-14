@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { systems } from "@/lib/systems";
 import { normalizeLead, validateLead, type LeadErrors } from "@/lib/lead";
+import { COUNTRIES, fullPhone } from "@/lib/countries";
+import { CountryCodePicker } from "./CountryCodePicker";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -14,11 +16,13 @@ export function DiagnosticForm({ defaultSystem }: { defaultSystem?: string }) {
   const [errors, setErrors] = useState<LeadErrors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState("");
+  const [country, setCountry] = useState(COUNTRIES[0]);
 
   async function onSubmit(ev: React.FormEvent<HTMLFormElement>) {
     ev.preventDefault();
     const form = ev.currentTarget;
-    const raw = Object.fromEntries(new FormData(form)) as Record<string, string>;
+    const { phone_local, ...rest } = Object.fromEntries(new FormData(form)) as Record<string, string>;
+    const raw = { ...rest, phone: fullPhone(country.dial, phone_local ?? "") };
     const e = validateLead(normalizeLead(raw));
     setErrors(e);
     if (Object.keys(e).length > 0) return;
@@ -78,8 +82,25 @@ export function DiagnosticForm({ defaultSystem }: { defaultSystem?: string }) {
         {field("name", "Nombre", { autoComplete: "name", maxLength: 120 })}
         {field("company", "Empresa", { autoComplete: "organization", maxLength: 160 })}
       </div>
-      <div className="row">
-        {field("phone", "WhatsApp", { type: "tel", autoComplete: "tel", placeholder: "+593 99 999 9999", maxLength: 20 })}
+      <div className="row row-phone">
+        <div className="field">
+          <label htmlFor="f-phone">WhatsApp</label>
+          <div className="phone-group">
+            <CountryCodePicker value={country} onChange={setCountry} />
+            <input
+              id="f-phone"
+              name="phone_local"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel-national"
+              placeholder={country.example}
+              maxLength={20}
+              aria-invalid={errors.phone ? true : undefined}
+              aria-describedby={errors.phone ? "f-phone-err" : undefined}
+            />
+          </div>
+          {errors.phone && <span id="f-phone-err" className="form-error">{errors.phone}</span>}
+        </div>
         {field("email", "Correo", { type: "email", autoComplete: "email", maxLength: 160 })}
       </div>
       <div className="field">
