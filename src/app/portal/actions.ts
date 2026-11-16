@@ -34,3 +34,29 @@ export async function updateLeadStatus(leadId: string, status: string): Promise<
   revalidatePath("/portal", "layout");
   return { ok: true };
 }
+
+/**
+ * Cambia el responsable de un prospecto (userId = null lo deja sin asignar).
+ * La base de datos (assign_lead) comprueba que quien lo pide sea el dueño de la cuenta
+ * y que el prospecto y la persona elegida sean de su misma empresa.
+ */
+export async function assignLead(leadId: string, userId: string | null): Promise<StatusResult> {
+  if (!UUID.test(leadId) || (userId !== null && !UUID.test(userId))) {
+    return { ok: false, error: "No se pudo guardar: el responsable no es válido." };
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "Tu sesión expiró. Vuelve a ingresar." };
+
+  const { error } = await supabase.rpc("assign_lead", { p_lead_id: leadId, p_user_id: userId });
+  if (error) {
+    console.error("[portal] assign_lead:", error.message);
+    return { ok: false, error: "No pudimos guardar el cambio. Inténtalo de nuevo." };
+  }
+
+  revalidatePath("/portal", "layout");
+  return { ok: true };
+}

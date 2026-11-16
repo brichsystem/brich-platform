@@ -3,7 +3,8 @@ import { LEAD_STATUS, type LeadStatus } from "@/lib/lead-status";
 
 export { LEAD_STATUS };
 
-export type Company = { id: string; name: string; is_demo: boolean };
+export type Company = { id: string; name: string; is_demo: boolean; lead_reminder_hours?: number };
+export type TeamMember = { id: string; full_name: string; receives_leads: boolean };
 export type Profile = { id: string; full_name: string | null; role: string; company_id: string };
 export type Lead = {
   id: string;
@@ -13,6 +14,8 @@ export type Lead = {
   status: LeadStatus;
   source: string;
   assigned_to: string | null;
+  assigned_user_id?: string | null;
+  attention_since?: string | null;
   phone?: string | null;
   email?: string | null;
   contact_count?: number;
@@ -49,11 +52,36 @@ export async function getSessionContext() {
     .maybeSingle<Profile>();
 
   const { data: company } = profile
-    ? await supabase.from("companies").select("id, name, is_demo").eq("id", profile.company_id).maybeSingle<Company>()
+    ? await supabase.from("companies").select("*").eq("id", profile.company_id).maybeSingle<Company>()
     : { data: null };
 
   return { supabase, user, profile, company } as const;
 }
+
+/** Personas de la empresa (para elegir responsable). Si la base aún no tiene la función, devuelve lista vacía. */
+export async function getTeam(supabase: Awaited<ReturnType<typeof createClient>>): Promise<TeamMember[]> {
+  const { data, error } = await supabase.rpc("company_team");
+  if (error) {
+    console.error("[portal] company_team:", error.message);
+    return [];
+  }
+  return (data ?? []) as TeamMember[];
+}
+
+/** Prospectos en "nuevo", del que más espera al más reciente. */
+export function pendingLeads(leads: Lead[], reminderHours = 0, now = new Date()) {
+  return leads
+    .filter((l) => l.status === "nuevo")
+    .map((l) => {
+      const hours = Math.max(0, Math.floor((now.getTime() - new Date(l.attention_since ?? l.created_at).getTime()) / 3_600_000));
+      return { lead: l, hours, late: reminderHours > 0 && hours >= reminderHours };
+    })
+    .sort((a, b) => b.hours - a.hours);
+}
+
+/** "3 h", "2 días". */
+export const fmtWait = (hours: number) =>
+  hours < 1 ? "menos de 1 h" : hours < 48 ? `${hours} h` : `${Math.floor(hours / 24)} días`;
 
 const TZ = "America/Guayaquil";
 export const fmtDate = (iso: string) =>

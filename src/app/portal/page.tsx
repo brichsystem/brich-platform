@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getSessionContext, summarize, fmtDateTime, RUN_STATUS, SYSTEM_NAME, type Lead, type Run } from "@/lib/portal";
+import { getSessionContext, summarize, pendingLeads, fmtWait, fmtDateTime, RUN_STATUS, SYSTEM_NAME, type Lead, type Run } from "@/lib/portal";
 import { LeadsTable } from "./LeadsTable";
 
 export default async function PortalHome() {
@@ -45,6 +45,9 @@ export default async function PortalHome() {
   const { kpis, weeks } = summarize(leads);
   const maxWeek = Math.max(1, ...weeks.map((w) => w.n));
   const recent = leads.slice(0, 10);
+  const reminderHours = company.lead_reminder_hours ?? 0;
+  const pending = pendingLeads(leads, reminderHours);
+  const lateCount = pending.filter((p) => p.late).length;
   const rate = kpis.contacted ? Math.round((kpis.won / kpis.contacted) * 100) : null;
 
   return (
@@ -98,6 +101,35 @@ export default async function PortalHome() {
               </li>
             ))}
           </ul>
+        )}
+      </section>
+
+      <section className="p-card p-pending" aria-label="Prospectos por atender">
+        <div className="p-card-head">
+          <h2>Por atender</h2>
+          <span className="p-note">
+            {pending.length === 0
+              ? "Ningún prospecto espera respuesta"
+              : `${pending.length} en estado Nuevo${lateCount > 0 ? ` · ${lateCount} con más de ${reminderHours} h de espera` : ""}`}
+          </span>
+        </div>
+        {pending.length === 0 ? (
+          <p className="p-muted">Todo al día. Cuando llegue un prospecto nuevo aparecerá aquí hasta que alguien lo atienda.</p>
+        ) : (
+          <>
+            <ul>
+              {pending.slice(0, 6).map(({ lead, hours, late }) => (
+                <li key={lead.id}>
+                  <div>
+                    <b>{lead.name}</b>
+                    <small>{lead.assigned_to ? `Responsable: ${lead.assigned_to}` : "Sin responsable"}</small>
+                  </div>
+                  <span className={`pill ${late ? "wait-late" : "wait-ok"}`}>Espera hace {fmtWait(hours)}</span>
+                </li>
+              ))}
+            </ul>
+            <Link className="p-link" href="/portal/prospectos?estado=nuevo">Ver los {pending.length} por atender →</Link>
+          </>
         )}
       </section>
 

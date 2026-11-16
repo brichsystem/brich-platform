@@ -88,7 +88,8 @@ export async function POST(request: Request) {
     const res = await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-brich-secret": secret },
-      body: JSON.stringify({ ...lead, companySlug, source: "web_form", submittedAt: new Date().toISOString() }),
+      // requestId identifica este envío: si n8n lo reintenta, la base de datos no lo cuenta dos veces.
+      body: JSON.stringify({ ...lead, companySlug, source: "web_form", requestId: crypto.randomUUID(), submittedAt: new Date().toISOString() }),
       signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) {

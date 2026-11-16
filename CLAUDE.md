@@ -30,8 +30,9 @@ Plataforma web de BRich System: catálogo público de sistemas de automatizació
 - `src/lib/supabase/` clientes de Supabase (solo clave publicable)
 - `src/lib/portal.ts` consultas y cálculos del dashboard
 - `src/app/api/leads/` recibe el formulario y lo envía a n8n (N8N_LEAD_WEBHOOK_URL + N8N_WEBHOOK_SECRET, solo servidor). Antibots: campo trampa, prueba de tiempo y límite por conexión (`src/lib/rate-limit.ts` → check_form_rate_limit; si Supabase no responde, deja pasar)
-- `n8n/` flujos de n8n exportados (sin credenciales)
-- `supabase/migrations/` SQL de tablas y RLS (cada usuario lee solo su empresa; n8n escribe con register_web_lead; el cliente solo puede cambiar el estado de sus prospectos con set_lead_status)
+- `n8n/` flujos de n8n exportados (sin credenciales); `n8n/README.md` explica cómo configurar, probar, activar y pausar cada automatización. n8n nunca consulta tablas: solo llama funciones (register_web_lead, claim_lead_reminders, log_automation_run)
+- `supabase/migrations/` SQL de tablas y RLS (cada usuario lee solo su empresa; n8n escribe con register_web_lead; el cliente solo puede cambiar el estado de sus prospectos con set_lead_status; el dueño cambia el responsable con assign_lead). Las automatizaciones se configuran por empresa en `companies` y nacen apagadas
+- `supabase/tests/run.mjs` pruebas del SQL con PGlite (`npm run test:db`); ampliarlas con cada migración nueva
 - `src/components/` componentes reutilizables
 - `src/lib/systems.ts` contenido del catálogo (editar aquí los textos de los sistemas)
 - `src/styles/tokens.css` tokens oficiales de marca

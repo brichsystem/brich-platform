@@ -19,7 +19,7 @@
 .portal-main { padding-block: 32px 64px; }
 .p-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
 .p-grid > * { min-width: 0; }
-.p-head, .p-kpis, .p-table { grid-column: 1 / -1; }
+.p-head, .p-kpis, .p-table, .p-pending { grid-column: 1 / -1; }
 @media (max-width: 960px) { .p-grid { grid-template-columns: 1fr; } }
 
 .p-head h1 { font-weight: 800; font-size: clamp(26px, 3.4vw, 36px); margin-top: 8px; }
@@ -101,3 +101,15 @@
 
 /* Prospecto que escribió más de una vez */
 .p-repeat { display: inline-block; margin-top: 4px; font-size: 12px; font-weight: 600; color: var(--brich-navy); background: rgba(92, 212, 232, 0.25); border-radius: 999px; padding: 2px 8px; }
+
+/* Prospectos por atender y responsable */
+.p-pending ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px 24px; }
+.p-pending li { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 8px; border-bottom: 1px solid var(--border-subtle); min-width: 0; }
+.p-pending li div { min-width: 0; }
+.p-pending b { display: block; font-weight: 600; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.p-pending small { color: var(--text-secondary); font-size: 13px; }
+.wait-ok { background: var(--brich-ice); color: var(--brich-navy); border-color: var(--border-subtle); }
+.wait-late { background: rgba(180, 35, 24, 0.1); color: var(--error); border-color: var(--error); }
+.assignee-select { font: inherit; font-size: 14px; padding: 4px 8px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--brich-white); color: var(--text-primary); cursor: pointer; max-width: 200px; }
+.assignee-select:disabled { opacity: 0.6; cursor: wait; }
+.assignee-select:focus-visible { outline: 2px solid var(--brich-blue); outline-offset: 2px; }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getSessionContext, type Lead } from "@/lib/portal";
+import { getSessionContext, getTeam, type Lead } from "@/lib/portal";
 import { LEAD_STATUS, LEAD_STATUSES, isLeadStatus } from "@/lib/lead-status";
 import { LeadsTable } from "../LeadsTable";
 
@@ -37,6 +37,8 @@ export default async function ProspectosPage({ searchParams }: { searchParams: P
     );
   }
 
+  // Solo el dueño de la cuenta puede cambiar el responsable.
+  const team = profile.role === "owner" ? await getTeam(supabase) : undefined;
   const all = data ?? [];
   const shown = filter ? all.filter((l) => l.status === filter) : all;
   const count = (s: string) => all.filter((l) => l.status === s).length;
@@ -46,7 +48,7 @@ export default async function ProspectosPage({ searchParams }: { searchParams: P
       <div className="p-head">
         <p className="eyebrow">Prospectos</p>
         <h1>Todos los prospectos</h1>
-        <p className="p-sub">Cambia el estado de cada prospecto a medida que avanzas con él. Los indicadores del resumen se actualizan solos.</p>
+        <p className="p-sub">Cambia el estado de cada prospecto a medida que avanzas con él. Los indicadores del resumen se actualizan solos.{team && team.length > 0 ? " Como responsable de la cuenta, también puedes cambiar quién atiende cada prospecto." : ""}</p>
       </div>
 
       <nav className="p-filters" aria-label="Filtrar por estado">
@@ -71,7 +73,7 @@ export default async function ProspectosPage({ searchParams }: { searchParams: P
             {filter ? `No hay prospectos en estado "${LEAD_STATUS[filter]}".` : "Aún no hay prospectos. Aparecerán aquí cuando llegue el primero."}
           </p>
         ) : (
-          <LeadsTable leads={shown} showContact />
+          <LeadsTable leads={shown} showContact team={team} />
         )}
       </section>
     </div>

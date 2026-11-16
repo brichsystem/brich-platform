@@ -1,8 +1,9 @@
-import { fmtDate, type Lead } from "@/lib/portal";
+import { fmtDate, type Lead, type TeamMember } from "@/lib/portal";
+import { AssigneeSelect } from "./AssigneeSelect";
 import { StatusSelect } from "./StatusSelect";
 
-/** Tabla de prospectos con el estado editable. */
-export function LeadsTable({ leads, showContact = false }: { leads: Lead[]; showContact?: boolean }) {
+/** Tabla de prospectos con el estado editable. Con `team`, el responsable también se puede cambiar (solo el dueño). */
+export function LeadsTable({ leads, showContact = false, team }: { leads: Lead[]; showContact?: boolean; team?: TeamMember[] }) {
   return (
     <div className="p-scroll">
       <table>
@@ -32,7 +33,13 @@ export function LeadsTable({ leads, showContact = false }: { leads: Lead[]; show
               )}
               <td>{l.interest ?? "—"}</td>
               <td><StatusSelect leadId={l.id} status={l.status} leadName={l.name} /></td>
-              <td>{l.assigned_to ?? "Sin asignar"}</td>
+              <td>
+                {team && team.length > 0 ? (
+                  <AssigneeSelect leadId={l.id} leadName={l.name} userId={l.assigned_user_id ?? null} label={l.assigned_to} team={team} />
+                ) : (
+                  l.assigned_to ?? "Sin asignar"
+                )}
+              </td>
               <td className="num">{fmtDate(l.created_at)}</td>
             </tr>
           ))}
