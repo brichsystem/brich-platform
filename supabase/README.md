@@ -10,6 +10,7 @@ Los archivos de `migrations/` se ejecutan en orden desde **Supabase → SQL Edit
 | `0004_registro_de_prospectos.sql` | Crea la empresa BRich y la función `register_web_lead` (solo n8n puede usarla) | Una vez |
 | `0005_cambiar_estado_prospecto.sql` | Función `set_lead_status`: el cliente cambia solo el estado de prospectos de su empresa | Una vez |
 | `0007_prospectos_sin_duplicados.sql` | Mismo correo o WhatsApp en la misma empresa = mismo prospecto: suma una visita, agrega el mensaje y reabre si estaba perdido. `register_web_lead` devuelve `{id, repetido, veces}` | Una vez |
+| `0008_formulario_por_cliente.sql` | Camino B: `form_enabled`, `form_services` y `notify_emails` por empresa; `get_public_form` (público, solo nombre y servicios); `register_web_lead` devuelve también `empresa` y `notify_emails` | Una vez, después de la 0007 |
 | `0006_limite_de_envios.sql` | Límite de envíos del formulario: 3 cada 10 min y 10 al día por conexión, 60 por hora en total. Guarda solo una huella cifrada, no la IP, y borra los registros a las 24 h | Una vez |
 
 ## Modelo de seguridad

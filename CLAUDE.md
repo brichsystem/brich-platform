@@ -25,6 +25,7 @@ Plataforma web de BRich System: catálogo público de sistemas de automatizació
 
 ## Estructura
 - `src/app/(site)/` web pública (inicio, `/sistemas/[slug]`)
+- `src/app/f/[slug]/` camino B: formulario público de cada cliente (solo si `companies.form_enabled`); usa `src/components/LeadForm.tsx` y `src/lib/public-form.ts`
 - `src/app/login/` y `src/app/portal/` portal privado (resumen + /portal/prospectos con estados editables) (Supabase Auth; `src/middleware.ts` protege /portal)
 - `src/lib/supabase/` clientes de Supabase (solo clave publicable)
 - `src/lib/portal.ts` consultas y cálculos del dashboard

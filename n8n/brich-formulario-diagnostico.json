@@ -1,5 +1,5 @@
 {
-  "name": "BRich · Formulario de diagnóstico → Supabase",
+  "name": "BRich · Formularios (web BRich y páginas /f de clientes) → Supabase",
   "nodes": [
     {
       "parameters": {
@@ -27,7 +27,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ p_company_slug: 'brich', p_name: $json.body.name, p_company_name: $json.body.company, p_phone: $json.body.phone, p_email: $json.body.email, p_interest: $json.body.system, p_message: $json.body.message, p_source: 'web_form' }) }}",
+        "jsonBody": "={{ JSON.stringify({ p_company_slug: $json.body.companySlug || 'brich', p_name: $json.body.name, p_company_name: $json.body.company, p_phone: $json.body.phone, p_email: $json.body.email, p_interest: $json.body.system, p_message: $json.body.message, p_source: 'web_form' }) }}",
         "options": {
           "response": {
             "response": {
@@ -62,8 +62,8 @@
     },
     {
       "parameters": {
-        "sendTo": "brich.system@gmail.com",
-        "subject": "={{ /\"repetido\":\\s*true/.test($('Guardar en Supabase').item.json.data) ? 'Volvió a escribir' : 'Nuevo prospecto' }}: {{ $('Formulario web').item.json.body.name }} ({{ $('Formulario web').item.json.body.company }})",
+        "sendTo": "={{ JSON.parse($('Guardar en Supabase').item.json.data).notify_emails || 'brich.system@gmail.com' }}",
+        "subject": "=[{{ JSON.parse($('Guardar en Supabase').item.json.data).empresa }}] {{ JSON.parse($('Guardar en Supabase').item.json.data).repetido ? 'Volvió a escribir' : 'Nuevo prospecto' }}: {{ $('Formulario web').item.json.body.name }} ({{ $('Formulario web').item.json.body.company }})",
         "emailType": "text",
         "message": "=Llegó un nuevo prospecto desde el formulario de diagnóstico de la web.\n\nNombre: {{ $('Formulario web').item.json.body.name }}\nEmpresa: {{ $('Formulario web').item.json.body.company }}\nWhatsApp: {{ $('Formulario web').item.json.body.phone }}\nCorreo: {{ $('Formulario web').item.json.body.email }}\nLe interesa: {{ $('Formulario web').item.json.body.system }}\nMayor problema: {{ $('Formulario web').item.json.body.message || 'No lo indicó' }}\n\nVer en el panel: https://brich-platform.vercel.app/portal",
         "options": {

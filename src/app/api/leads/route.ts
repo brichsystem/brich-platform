@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { normalizeLead, validateLead } from "@/lib/lead";
 import { checkRateLimit, clientIp, connectionKey } from "@/lib/rate-limit";
+import { getPublicForm } from "@/lib/public-form";
+
+/** Empresa por defecto: el formulario de la web de BRich. */
+const DEFAULT_COMPANY = "brich";
 
 /** Una persona tarda más que esto en llenar el formulario; un bot, mucho menos. */
 const MIN_FILL_MS = 2_500;
@@ -40,6 +44,24 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, errors }, { status: 400 });
   }
 
+  // Camino B: el formulario de un cliente (/f/<slug>). Solo se acepta si BRich activó ese formulario,
+  // así nadie puede inventar un slug y meter prospectos en el panel de otra empresa.
+  const companySlug =
+    typeof raw.companySlug === "string" && raw.companySlug.trim() !== "" ? raw.companySlug.trim() : DEFAULT_COMPANY;
+  if (companySlug !== DEFAULT_COMPANY) {
+    try {
+      if (!(await getPublicForm(companySlug))) {
+        return NextResponse.json({ ok: false, error: "Este formulario no está disponible." }, { status: 404 });
+      }
+    } catch (err) {
+      console.error("[leads] No se pudo verificar el formulario:", err instanceof Error ? err.message : err);
+      return NextResponse.json(
+        { ok: false, error: "No pudimos registrar tu solicitud. Inténtalo de nuevo en unos minutos." },
+        { status: 503 },
+      );
+    }
+  }
+
   if (!webhookUrl || !secret) {
     console.error("[leads] Falta N8N_LEAD_WEBHOOK_URL o N8N_WEBHOOK_SECRET");
     return NextResponse.json(
@@ -66,7 +88,7 @@ export async function POST(request: Request) {
     const res = await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-brich-secret": secret },
-      body: JSON.stringify({ ...lead, source: "web_form", submittedAt: new Date().toISOString() }),
+      body: JSON.stringify({ ...lead, companySlug, source: "web_form", submittedAt: new Date().toISOString() }),
       signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) {
