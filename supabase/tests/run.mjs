@@ -164,5 +164,50 @@ check("service_role puede reclamar recordatorios", await asRole("service_role", 
 console.log("\n8. Prospectos anteriores a esta migración");
 check("todos tienen attention_since", (await one(`select count(*)::int n from public.leads where attention_since is null`)).n === 0);
 
+console.log("\n9. Alta de clientes (0010)");
+const link = (await one(`select public.create_onboarding('Cliente Ficticio') as l`)).l;
+const code = link.split("/").pop();
+check("create_onboarding devuelve un enlace /alta/<código de 32>", /^https:\/\/brich-platform\.vercel\.app\/alta\/[0-9a-f]{32}$/.test(link), link);
+const pub = await asRole("anon", () => one(`select public.get_onboarding($1) as r`, [code]));
+check("la página pública solo ve nombre y estado", pub.r.label === "Cliente Ficticio" && pub.r.submitted === false && Object.keys(pub.r).length === 2);
+check("código inventado no devuelve nada", (await asRole("anon", () => one(`select public.get_onboarding('0000') as r`))).r === null);
+check("no se puede aplicar antes de que el cliente responda", await fails(`select public.apply_onboarding($1, 'cliente-ficticio')`, [code]));
+const alta = {
+  company: "Cliente Ficticio S.A.", services: ["Servicio Uno", "Servicio Dos"], notifyEmails: ["gerencia@ficticio.invalid"],
+  people: [
+    { name: "Gerente Ficticia", email: "gerente@ficticio.invalid", phone: "+593 99 000 1111", owner: true, seller: false },
+    { name: "Vendedor Ficticio", email: "ventas@ficticio.invalid", phone: "+593 99 000 2222", owner: false, seller: true },
+    { name: "Persona Ajena", email: "v1@prueba.invalid", phone: "+593 99 000 3333", owner: false, seller: true },
+  ],
+  rotate: true, reminderHours: 24,
+};
+check("el cliente (anon) envía sus datos", (await asRole("anon", () => one(`select public.submit_onboarding($1, $2::jsonb) as r`, [code, JSON.stringify(alta)]))).r === true);
+check("el enlace sirve una sola vez", (await asRole("anon", () => one(`select public.submit_onboarding($1, '{"company":"Otro"}'::jsonb) as r`, [code]))).r === false);
+check("rechaza datos demasiado grandes", await asRole("anon", () => fails(`select public.submit_onboarding($1, $2::jsonb)`, [code, JSON.stringify({ x: "a".repeat(25000) })])));
+for (const role of ["anon", "authenticated"]) {
+  check(`${role} no puede crear, listar ni aplicar altas`, await asRole(role, async () =>
+    (await fails(`select public.create_onboarding('x')`)) && (await fails(`select * from public.onboarding_status()`)) &&
+    (await fails(`select public.apply_onboarding($1, 'x')`, [code])) && (await fails(`select * from public.onboarding_requests`))));
+}
+check("onboarding_status muestra la respuesta", (await q(`select * from public.onboarding_status()`))[0].respuestas.includes("Vendedor Ficticio"));
+check("slug inválido se rechaza", await fails(`select public.apply_onboarding($1, 'Con Espacios')`, [code]));
+await db.exec(`insert into auth.users (email) values ('gerente@ficticio.invalid')`);
+let ap = (await one(`select public.apply_onboarding($1, 'cliente-ficticio') as r`, [code])).r;
+check("vincula a quien ya tiene usuario", ap.usuarios_vinculados.length === 1 && ap.usuarios_vinculados[0] === "gerente@ficticio.invalid", JSON.stringify(ap));
+check("avisa qué usuarios faltan por crear", ap.usuarios_por_crear_en_Authentication.includes("ventas@ficticio.invalid"));
+check("no mueve a un usuario que ya es de otra empresa", ap.usuarios_que_ya_son_de_otra_empresa.includes("v1@prueba.invalid") &&
+  (await one(`select c.slug from public.profiles p join public.companies c on c.id = p.company_id where p.id = $1`, [v1])).slug === "prueba");
+await db.exec(`insert into auth.users (email) values ('ventas@ficticio.invalid')`);
+ap = (await one(`select public.apply_onboarding($1, 'cliente-ficticio') as r`, [code])).r;
+check("se puede repetir: ahora vincula a los dos", ap.usuarios_vinculados.length === 2 && ap.usuarios_por_crear_en_Authentication.length === 0);
+const co = await one(`select * from public.companies where slug = 'cliente-ficticio'`);
+check("empresa creada con formulario, servicios, avisos y configuración",
+  co.form_enabled && co.form_services.length === 2 && co.notify_emails === "gerencia@ficticio.invalid" && co.lead_assignment === "rotativa" && co.lead_reminder_hours === 24 && !co.is_demo, JSON.stringify(co));
+check("sin duplicar la empresa al repetir", (await one(`select count(*)::int n from public.companies where slug = 'cliente-ficticio'`)).n === 1);
+const fl = await reg({ slug: "cliente-ficticio", name: "Prospecto Ficticio", email: "p@ejemplo.invalid", req: "alta-1" });
+check("su primer prospecto va al vendedor y avisa a gerencia", fl.vendedor === "Vendedor Ficticio" && fl.avisar_a === "ventas@ficticio.invalid, gerencia@ficticio.invalid", JSON.stringify(fl));
+check("su formulario público queda activo", (await asRole("anon", () => one(`select public.get_public_form('cliente-ficticio') as r`))).r.name === "Cliente Ficticio S.A.");
+check("la página queda cerrada tras el envío", (await one(`select public.get_onboarding($1) as r`, [code])).r.submitted === true);
+
 console.log(`\n${passed} comprobaciones correctas, ${failed.length} fallidas.`);
 if (failed.length) { console.log(failed.map((f) => " - " + f).join("\n")); process.exit(1); }

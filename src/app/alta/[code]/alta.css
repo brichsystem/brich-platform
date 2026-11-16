@@ -1,0 +1,23 @@
+/* Alta de clientes: formulario largo dividido en pasos numerados. */
+.alta-box { max-width: 720px; }
+.alta-logo { justify-self: center; }
+.alta-form { display: grid; gap: 32px; padding-top: 24px; }
+.alta-step { display: grid; gap: 16px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.alta-step legend { padding: 0; font-family: var(--font-display); font-weight: 700; font-size: 20px; display: flex; gap: 12px; align-items: baseline; }
+.alta-step legend span { font-family: var(--font-body, inherit); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brich-blue); white-space: nowrap; }
+.alta-help { color: var(--text-secondary); font-size: 15px; }
+.alta-step legend { margin-bottom: 8px; }
+.alta-person .row { align-items: start; }
+.alta-list { display: grid; gap: 8px; }
+.alta-person { border: 1px solid var(--border-subtle); border-radius: var(--radius-card); padding: 24px; display: grid; gap: 16px; }
+.alta-person-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.alta-person-head b { font-weight: 600; font-size: 15px; }
+.alta-checks { display: grid; gap: 8px; }
+.alta-check { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; cursor: pointer; }
+.alta-check input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--brich-blue); flex: none; }
+.alta-check small { display: block; color: var(--text-secondary); font-size: 13px; }
+.alta-link { justify-self: start; background: none; border: 0; padding: 8px 0; font: inherit; font-size: 15px; font-weight: 600; color: var(--brich-blue); cursor: pointer; }
+.alta-link:hover { text-decoration: underline; }
+.alta-link.danger { color: var(--error); padding: 0; }
+.alta-link:focus-visible, .alta-check input:focus-visible { outline: 2px solid var(--brich-blue); outline-offset: 2px; }
+@media (max-width: 520px) { .alta-person { padding: 16px; } }
