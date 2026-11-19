@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getSystem, systems } from "@/lib/systems";
-import { Check, Spark } from "@/components/Icons";
-import { DiagnosticSection } from "@/components/DiagnosticSection";
+
+const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+import { Check } from "@/components/Icons";
+import { Logo } from "@/components/Logo";
+import { Solicitud } from "@/components/Solicitud";
 
 export function generateStaticParams() {
   return systems.map((s) => ({ slug: s.slug }));
@@ -15,6 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return s ? { title: s.name, description: s.summary } : {};
 }
 
+/** Ficha de un sistema: el mismo documento de la portada, con el detalle de un solo sistema. */
 export default async function SystemPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const s = getSystem(slug);
@@ -22,93 +26,103 @@ export default async function SystemPage({ params }: { params: Promise<{ slug: s
   const others = systems.filter((o) => o.slug !== s.slug);
 
   return (
-    <>
-      <div className="on-navy">
-        <div className="wrap sys-hero">
-          <Link className="crumb" href="/#sistemas">← Todos los sistemas</Link>
-          <p className="eyebrow" style={{ marginTop: 24 }}>{s.name}</p>
-          <h1>{s.title}</h1>
-          <p className="lead">{s.summary}</p>
-          <div className="ctas">
-            <Link className="btn btn-primary" href="#diagnostico">Pedir diagnóstico</Link>
+    <div className="desk">
+      <article className="sheet ficha-sistema" aria-labelledby="sistema-title">
+        <div className="sheet-head">
+          <div className="box emisor">
+            <Logo variant="navy" height={40} />
+            <p>
+              <b>BRich System</b>
+              <span>Sistemas de automatización empresarial · Quito, Ecuador</span>
+            </p>
+          </div>
+          <div className="box datos">
+            <p className="datos-title">Ficha de sistema</p>
+            <dl>
+              <dt>Sistema</dt>
+              <dd>{s.name}</dd>
+              <dt>Para</dt>
+              <dd>{cap(s.forWho.replace(/^Para /, "").replace(/\.$/, ""))}</dd>
+            </dl>
           </div>
         </div>
-      </div>
 
-      <section className="section">
-        <div className="wrap">
-          <div className="sec-head">
-            <p className="eyebrow">El problema</p>
-            <h2>{s.forWho}</h2>
-          </div>
-          <div className="grid3">
+        <div className="asunto">
+          <Link className="volver" href="/#sistemas">← Todos los sistemas</Link>
+          <h1 id="sistema-title">{s.title}</h1>
+          <p>{s.summary}</p>
+          <Link className="btn btn-primary" href="#solicitud">Pedir diagnóstico</Link>
+        </div>
+
+        <section className="part">
+          <h2>Lo que resuelve</h2>
+          <ul className="obs">
             {s.problems.map((p) => (
-              <div key={p} className="card">
-                <div className="card-head"><Spark /></div>
-                <p style={{ color: "var(--text-primary)" }}>{p}</p>
-              </div>
+              <li key={p}><p className="obs-solo">{p}</p></li>
             ))}
-          </div>
-        </div>
-      </section>
+          </ul>
+        </section>
 
-      <section className="section ice">
-        <div className="wrap">
-          <div className="sec-head">
-            <p className="eyebrow">Cómo funciona</p>
-            <h2>El recorrido, paso a paso</h2>
-          </div>
-          <ol className="process cols-auto">
-            {s.howItWorks.map((h) => (
-              <li key={h.title}><h3>{h.title}</h3><p>{h.text}</p></li>
+        <section className="part">
+          <h2>Cómo funciona</h2>
+          <ol className="etapas">
+            {s.howItWorks.map((h, i) => (
+              <li key={h.title}>
+                <span className="etapa num">Paso {i + 1}</span>
+                <h3>{h.title}</h3>
+                <p>{h.text}</p>
+              </li>
             ))}
           </ol>
-        </div>
-      </section>
+        </section>
 
-      <section className="section">
-        <div className="wrap">
-          <div className="split">
-            <div className="card">
-              <h3>Qué incluye</h3>
-              <ul className="checks">
+        <section className="part">
+          <div className="condiciones">
+            <div>
+              <h2 className="h-sub">Qué incluye</h2>
+              <ul className="incluye">
                 {s.features.map((f) => <li key={f}><Check />{f}</li>)}
               </ul>
-              <h3 style={{ marginTop: 16 }}>Herramientas que conectamos</h3>
-              <ul className="tools">
+              <h2 className="h-sub">Herramientas que conectamos</h2>
+              <ul className="etiquetas">
                 {s.tools.map((t) => <li key={t}>{t}</li>)}
               </ul>
             </div>
-            <div className="card us">
-              <h3>Lo que necesitamos de tu empresa</h3>
+            <div>
+              <h2 className="h-sub">Lo que necesitamos de tu empresa</h2>
               <ul>
                 {s.clientProvides.map((c) => <li key={c}>{c}</li>)}
               </ul>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="section ice" style={{ paddingBottom: 0 }}>
-        <div className="wrap">
-          <div className="sec-head">
-            <p className="eyebrow">Otros sistemas</p>
-            <h2>Se pueden combinar según tu operación</h2>
-          </div>
-          <div className="others">
+        <section className="part">
+          <h2>Se combina con</h2>
+          <div className="tabla" role="table" aria-label="Otros sistemas BRich">
             {others.map((o) => (
-              <Link key={o.slug} href={`/sistemas/${o.slug}`} className="card sys">
-                <span className="code">{o.name}</span>
-                <h3>{o.title}</h3>
-                <p>{o.summary}</p>
-                <span className="more">Ver cómo funciona →</span>
-              </Link>
+              <div className="tabla-fila tabla-corta" role="row" key={o.slug}>
+                <span role="cell" className="sis">
+                  <b>{o.title}</b>
+                  <small>{o.name}</small>
+                </span>
+                <span role="cell" className="para">{o.summary}</span>
+                <span role="cell" className="ver">
+                  <Link href={`/sistemas/${o.slug}`} aria-label={`Ver la ficha de ${o.name}`}>Ver ficha →</Link>
+                </span>
+              </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      </article>
 
-      <DiagnosticSection defaultSystem={s.name} />
-    </>
+      <Solicitud
+        headingLevel={2}
+        compact
+        defaultSystem={s.name}
+        title={`¿${s.title} para tu empresa? Revisemos tu caso.`}
+        intro="En 30 minutos revisamos cómo trabaja tu empresa y te decimos qué sistema tiene sentido para ti, o si todavía no lo necesitas."
+      />
+    </div>
   );
 }

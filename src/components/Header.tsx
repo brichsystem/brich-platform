@@ -6,15 +6,17 @@ export function Header() {
     <header className="site-header">
       <div className="wrap nav">
         <Link className="logo" href="/" aria-label="BRich, inicio">
-          <Logo />
+          <Logo variant="navy" />
         </Link>
-        <ul>
-          <li><Link href="/#sistemas">Sistemas</Link></li>
-          <li><Link href="/#proceso">Proceso</Link></li>
-          <li><Link href="/#portal">Portal</Link></li>
-          <li><Link href="/login">Ingresar</Link></li>
-        </ul>
-        <Link className="btn btn-primary" href="/#diagnostico">
+        <nav aria-label="Principal">
+          <ul>
+            <li><Link href="/#sistemas">Sistemas</Link></li>
+            <li><Link href="/#recorrido">Recorrido</Link></li>
+            <li><Link href="/#procedimiento">Procedimiento</Link></li>
+            <li><Link href="/login">Ingresar</Link></li>
+          </ul>
+        </nav>
+        <Link className="btn btn-primary" href="/#solicitud">
           Pedir diagnóstico
         </Link>
       </div>

@@ -18,6 +18,10 @@ export type LeadFormProps = {
   successTitle: string;
   successText: string;
   legal: string;
+  /** Se muestra junto al botón de envío (por ejemplo, la casilla del sello del comprobante). */
+  footer?: React.ReactNode;
+  /** Reemplaza la pantalla de "enviado" por defecto. */
+  renderSent?: (sent: { name: string; at: Date; reset: () => void }) => React.ReactNode;
 };
 
 /**
@@ -33,11 +37,14 @@ export function LeadForm({
   successTitle,
   successText,
   legal,
+  footer,
+  renderSent,
 }: LeadFormProps) {
   const [errors, setErrors] = useState<LeadErrors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState("");
   const [country, setCountry] = useState(COUNTRIES[0]);
+  const [sent, setSent] = useState<{ name: string; at: Date } | null>(null);
   // Momento en que el formulario apareció en pantalla (prueba de tiempo contra bots).
   const shownAt = useRef(0);
   useEffect(() => {
@@ -63,6 +70,7 @@ export function LeadForm({
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.ok) {
+        setSent({ name: String(rest.name ?? "").trim(), at: new Date() });
         setStatus("sent");
         form.reset();
         return;
@@ -74,6 +82,10 @@ export function LeadForm({
       setServerError("No hay conexión. Revisa tu internet e inténtalo de nuevo.");
       setStatus("error");
     }
+  }
+
+  if (status === "sent" && renderSent && sent) {
+    return <>{renderSent({ ...sent, reset: () => setStatus("idle") })}</>;
   }
 
   if (status === "sent") {
@@ -89,7 +101,7 @@ export function LeadForm({
   }
 
   const field = (name: keyof LeadErrors, label: string, props: React.InputHTMLAttributes<HTMLInputElement>) => (
-    <div className="field">
+    <div className="field" data-field={name}>
       <label htmlFor={`f-${name}`}>{label}</label>
       <input
         id={`f-${name}`}
@@ -109,7 +121,7 @@ export function LeadForm({
         {field("company", "Empresa", { autoComplete: "organization", maxLength: 160 })}
       </div>
       <div className="row row-phone">
-        <div className="field">
+        <div className="field" data-field="phone">
           <label htmlFor="f-phone">WhatsApp</label>
           <div className="phone-group">
             <CountryCodePicker value={country} onChange={setCountry} />
@@ -129,7 +141,7 @@ export function LeadForm({
         </div>
         {field("email", "Correo", { type: "email", autoComplete: "email", maxLength: 160 })}
       </div>
-      <div className="field">
+      <div className="field" data-field="system">
         <label htmlFor="f-system">¿Qué te interesa?</label>
         <select id="f-system" name="system" defaultValue={defaultOption ?? options[0]}>
           {options.map((o) => (
@@ -138,7 +150,7 @@ export function LeadForm({
           <option>Todavía no lo sé</option>
         </select>
       </div>
-      <div className="field">
+      <div className="field" data-field="message">
         <label htmlFor="f-message">{messageLabel}</label>
         <textarea id="f-message" name="message" maxLength={2000} />
       </div>
@@ -147,13 +159,18 @@ export function LeadForm({
         <label htmlFor="f-website">No llenar</label>
         <input id="f-website" name="website" tabIndex={-1} autoComplete="off" />
       </div>
-      {status === "error" && serverError && (
-        <p className="form-error" role="alert">{serverError}</p>
-      )}
-      <button className="btn btn-primary" type="submit" disabled={status === "sending"}>
-        {status === "sending" ? "Enviando…" : submitLabel}
-      </button>
-      <p className="form-legal">{legal}</p>
+      <div className="form-foot" data-field="foot">
+        {footer}
+        <div className="form-actions">
+          {status === "error" && serverError && (
+            <p className="form-error" role="alert">{serverError}</p>
+          )}
+          <button className="btn btn-primary" type="submit" disabled={status === "sending"}>
+            {status === "sending" ? "Enviando…" : submitLabel}
+          </button>
+          <p className="form-legal">{legal}</p>
+        </div>
+      </div>
     </form>
   );
 }
