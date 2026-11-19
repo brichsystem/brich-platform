@@ -35,7 +35,10 @@ body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-c
 .nav ul a:hover { color: var(--brich-navy); }
 @media (max-width: 860px) { .site-header nav { display: none; } .nav .btn { margin-left: auto; } }
 .nav .btn { min-height: 48px; font-size: 18px; padding: 0 20px; }
-@media (max-width: 420px) { .nav .btn { display: inline-flex; padding: 0 16px; } .logo img { height: 32px; } }
+.logo { flex: none; }
+.cta-corto { display: none; }
+@media (max-width: 420px) { .nav { gap: 12px; } .nav .btn { display: inline-flex; padding: 0 12px; } }
+@media (max-width: 359px) { .cta-largo { display: none; } .cta-corto { display: inline; } }
 
 .site-footer { background: var(--brich-white); border-top: var(--rule); color: var(--text-secondary); }
 .site-footer .wrap { color: var(--text-secondary); }

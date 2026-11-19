@@ -16,8 +16,9 @@ export function Header() {
             <li><Link href="/login">Ingresar</Link></li>
           </ul>
         </nav>
-        <Link className="btn btn-primary" href="/#campos">
-          Pedir diagnóstico
+        <Link className="btn btn-primary" href="/#campos" aria-label="Pedir diagnóstico">
+          <span className="cta-largo">Pedir diagnóstico</span>
+          <span className="cta-corto" aria-hidden="true">Diagnóstico</span>
         </Link>
       </div>
     </header>
