@@ -159,7 +159,7 @@ Este mundo reemplaza el aspecto anterior (una landing SaaS genérica con fondos 
 Paleta casi monocroma de tinta y papel: Navy sobre blanco y Ice, con BRich Blue como única voz de acción y estado. Todos los valores salen de `src/styles/tokens.css`; los tintes se derivan con `color-mix()` en `site.css`.
 
 ### Primary
-- **BRich Blue** (`--brich-blue`): botón primario, subrayado de enlaces, borde doble de sellos, punto de la pista completada, numerales de etapas, íconos de verificación, anillo de foco de los campos y `outline` de `:focus-visible`. Es acción o estado, nunca decoración.
+- **BRich Blue** (`--brich-blue`): botón primario, subrayado de enlaces, borde doble de sellos, punto de la pista completada, íconos de verificación, anillo de foco de los campos y `outline` de `:focus-visible`. Es acción o estado, nunca decoración.
 
 ### Secondary
 - **Cyan de sello** (`--brich-cyan`): solo como tinta del sello RECIBIDA, a través del tinte `--tint-cyan` (22% Cyan sobre blanco). No aparece en ningún otro elemento de la página.
@@ -217,7 +217,8 @@ Puntos de quiebre:
 - **≤1000px (tableta):** campos a media fila (3 de 6), el mensaje a ancho completo; la tabla de sistemas oculta la columna "Para quién".
 - **≤860px:** se oculta la navegación; queda logo y botón.
 - **≤760px (celular):** cabecera del documento apilada y sin logo dentro de la hoja (el logo queda en la cabecera del sitio); rellenos de 16px; un campo por fila; la pista de estado pasa a vertical con regla izquierda; tabla, condiciones y etapas en una columna; la bitácora reordena hora y sello arriba; el botón de cierre ocupa todo el ancho.
-- **≤420px:** el botón de la cabecera se mantiene visible con 16px de relleno.
+- **≤420px:** el botón de la cabecera se mantiene visible con 12px de relleno y el logo conserva su ancho completo (nunca se encoge por debajo de 120px).
+- **≤359px:** el botón de la cabecera cambia a la etiqueta corta "Diagnóstico" (con `aria-label` completo) para no reducir el logo.
 
 Espaciado: la escala es 8 / 16 / 24 / 32 / 40px, con 80px al pie del escritorio. Las anclas de sección usan `scroll-margin-top: 96px` para quedar bajo la cabecera fija.
 
@@ -246,7 +247,7 @@ Lenguaje de papel cortado: rectángulos, reglas rectas y esquinas apenas suaviza
 ### Buttons
 Directo y de una sola pieza, sin sombra ni gradiente.
 - **Shape:** esquinas suaves (`--radius-button`).
-- **Primary:** BRich Blue con texto blanco Inter 700 18px, 48px de alto, 24px de relleno lateral (20px en la cabecera, 16px a ≤420px). En el formulario mide al menos 240px; en el cierre de celular, todo el ancho.
+- **Primary:** BRich Blue con texto blanco Inter 700 18px, 48px de alto, 24px de relleno lateral (20px en la cabecera, 12px a ≤420px). En el formulario mide al menos 240px; en el cierre de celular, todo el ancho.
 - **Hover / Focus / Active:** hover aclara con `filter: brightness(1.08)` (0,2s); al presionar escala a 0,97 en 160ms con `--ease-out`; foco con `outline` de 2px en BRich Blue y 3px de separación. Desactivado (enviando): opacidad 0,6 y texto "Enviando…".
 - **Enlace subrayado** (`.btn-link`, `.ver a`): Navy 15px 600, subrayado BRich Blue de 2px a 4px de distancia; en hover el subrayado pasa a Navy. Es la acción secundaria ("Ver ficha →", "Ingresar al portal →", "Registrar otra solicitud").
 

@@ -207,7 +207,7 @@ body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-c
 .etapas li { padding: 16px 24px 0 0; display: grid; gap: 6px; align-content: start; }
 .etapas li + li { border-left: var(--rule); padding-left: 24px; }
 .etapas h3 { font-weight: 700; font-size: 18px; }
-.etapas h3 .num { color: var(--brich-blue); }
+.etapas h3 .num { color: var(--brich-navy); }
 .etapas p { font-size: 15px; color: var(--text-secondary); }
 
 .copia { margin-top: 16px; display: grid; gap: 16px; justify-items: start; }

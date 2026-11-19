@@ -116,7 +116,7 @@ img { max-width: 100%; }
   position: absolute; z-index: 30; top: calc(100% + 4px); left: 0; width: 288px; max-width: calc(100vw - 48px);
   max-height: 288px; overflow-y: auto; margin: 0; padding: 8px 0; list-style: none;
   background: var(--brich-white); border: 1px solid var(--border-subtle); border-radius: var(--radius-card);
-  box-shadow: 0 16px 32px rgba(11, 23, 38, 0.16);
+  box-shadow: 0 16px 32px color-mix(in srgb, var(--brich-navy) 16%, transparent);
 }
 .cc-list:focus { outline: none; }
 .cc-opt { display: flex; align-items: center; gap: 12px; padding: 8px 16px; cursor: pointer; font-size: 15px; }

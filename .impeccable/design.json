@@ -1,0 +1,442 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-19T18:55:18+00:00",
+  "title": "Design System: BRich Platform · Web pública",
+  "extensions": {
+    "colorMeta": {
+      "brich-blue": {
+        "role": "primary",
+        "displayName": "BRich Blue",
+        "canonical": "#1c96bc",
+        "tonalRamp": [
+          "#000e1a",
+          "#002738",
+          "#00425a",
+          "#005f7d",
+          "#228daf",
+          "#74b9d5",
+          "#aaddf3",
+          "#cef6ff"
+        ]
+      },
+      "brich-cyan": {
+        "role": "secondary",
+        "displayName": "Cyan de sello",
+        "canonical": "#5cd4e8",
+        "tonalRamp": [
+          "#001016",
+          "#002932",
+          "#004551",
+          "#006272",
+          "#0c90a2",
+          "#6fbcc9",
+          "#a8dfea",
+          "#ccf8ff"
+        ]
+      },
+      "brich-navy": {
+        "role": "neutral",
+        "displayName": "Navy tinta",
+        "canonical": "#0b1726",
+        "tonalRamp": [
+          "#070b11",
+          "#1b222b",
+          "#323b47",
+          "#4a5666",
+          "#738294",
+          "#a4afbe",
+          "#ccd5e1",
+          "#e8eff8"
+        ]
+      },
+      "text-primary": {
+        "role": "neutral",
+        "displayName": "Navy tinta (texto)",
+        "canonical": "var(--text-primary)",
+        "tonalRamp": [
+          "#070b11",
+          "#1b222b",
+          "#323b47",
+          "#4a5666",
+          "#738294",
+          "#a4afbe",
+          "#ccd5e1",
+          "#e8eff8"
+        ]
+      },
+      "text-secondary": {
+        "role": "neutral",
+        "displayName": "Gris pizarra",
+        "canonical": "#526779",
+        "tonalRamp": [
+          "#060c11",
+          "#19232b",
+          "#2f3c48",
+          "#465867",
+          "#6f8394",
+          "#a0b0be",
+          "#c9d6e1",
+          "#e6f0f9"
+        ]
+      },
+      "brich-steel": {
+        "role": "neutral",
+        "displayName": "Acero",
+        "canonical": "#7f97a6",
+        "tonalRamp": [
+          "#060c11",
+          "#18232a",
+          "#2e3d46",
+          "#455864",
+          "#6e8491",
+          "#a0b1bc",
+          "#c9d7df",
+          "#e6f0f7"
+        ]
+      },
+      "brich-white": {
+        "role": "neutral",
+        "displayName": "Papel",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#222222",
+          "#3a3a3a",
+          "#555555",
+          "#808080",
+          "#aeaeae",
+          "#d4d4d4",
+          "#eeeeee"
+        ]
+      },
+      "brich-ice": {
+        "role": "neutral",
+        "displayName": "Escritorio Ice",
+        "canonical": "#edf3f6",
+        "tonalRamp": [
+          "#0a0b0c",
+          "#202223",
+          "#383b3d",
+          "#525658",
+          "#7c8184",
+          "#abafb1",
+          "#d2d5d6",
+          "#eceff0"
+        ]
+      },
+      "border-subtle": {
+        "role": "neutral",
+        "displayName": "Regla fina",
+        "canonical": "#d9e3e9",
+        "tonalRamp": [
+          "#090c0d",
+          "#1e2225",
+          "#363b3f",
+          "#4f565b",
+          "#798287",
+          "#a8afb3",
+          "#d0d5d8",
+          "#ebeff2"
+        ]
+      },
+      "surface-muted": {
+        "role": "neutral",
+        "displayName": "Pie de documento",
+        "canonical": "#f7fafc",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#222222",
+          "#3a3a3a",
+          "#555555",
+          "#808080",
+          "#aeaeae",
+          "#d4d4d4",
+          "#eeeeee"
+        ]
+      },
+      "tint-blue": {
+        "role": "neutral",
+        "displayName": "Tinte azul",
+        "canonical": "color-mix(in srgb, var(--brich-blue) 8%, var(--brich-white))",
+        "tonalRamp": [
+          "#090c0c",
+          "#1e2224",
+          "#363c3d",
+          "#505759",
+          "#7a8284",
+          "#a9afb1",
+          "#d0d5d7",
+          "#ebeff0"
+        ]
+      },
+      "tint-cyan": {
+        "role": "secondary",
+        "displayName": "Tinte de sello",
+        "canonical": "color-mix(in srgb, var(--brich-cyan) 22%, var(--brich-white))",
+        "tonalRamp": [
+          "#060d0e",
+          "#192426",
+          "#2e3e40",
+          "#46595c",
+          "#6e8588",
+          "#a0b2b5",
+          "#c9d7d9",
+          "#e6f1f3"
+        ]
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "Error",
+        "canonical": "#b42318",
+        "tonalRamp": [
+          "#230000",
+          "#470000",
+          "#6f1009",
+          "#992319",
+          "#d24f3f",
+          "#f58d7d",
+          "#ffbcaf",
+          "#ffdcd1"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "El asunto de cada hoja (h1 de inicio, ficha de sistema y 404)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Título de cada parte del documento."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Títulos de fila: observaciones, condiciones, etapas, subtítulos de ficha."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Título de la caja de datos de la cabecera del documento; rótulo de documento, no antetítulo."
+      },
+      "stamp": {
+        "displayName": "Stamp",
+        "purpose": "Solo el texto del sello RECIBIDA."
+      },
+      "body-lead": {
+        "displayName": "Body lead",
+        "purpose": "Párrafo bajo el asunto (17px en celular)."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto base de la página."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Rótulos de campo, cabeceras de tabla, etiqueta Demostrativo, casilla vacía."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Botón primario, texto blanco 18px bold por regla de marca."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet",
+        "value": "0 1px 2px color-mix(in srgb, var(--brich-navy) 6%, transparent), 0 16px 40px -16px color-mix(in srgb, var(--brich-navy) 20%, transparent)",
+        "purpose": "Hoja sobre escritorio: la única elevación del mundo."
+      },
+      {
+        "name": "dropdown",
+        "value": "0 16px 32px rgba(11, 23, 38, 0.16)",
+        "purpose": "Menú del selector de código de país (base compartida en globals.css)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Curva de todas las transiciones del mundo."
+      },
+      {
+        "name": "press",
+        "value": "transform 160ms var(--ease-out); :active scale(0.97)",
+        "purpose": "Respuesta al presionar botones."
+      },
+      {
+        "name": "field-focus",
+        "value": "box-shadow 160ms var(--ease-out)",
+        "purpose": "Aparición del anillo interior del campo enfocado."
+      },
+      {
+        "name": "estampar",
+        "value": "420ms var(--ease-out) both; from rotate(-9deg) scale(1.35) blur(6px) to rotate(-5deg) scale(1)",
+        "purpose": "El sello RECIBIDA se estampa en su casilla al enviar. Con prefers-reduced-motion: solo opacidad, 200ms."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone-xs",
+        "value": "359px"
+      },
+      {
+        "name": "phone-narrow",
+        "value": "420px"
+      },
+      {
+        "name": "phone",
+        "value": "760px"
+      },
+      {
+        "name": "nav-collapse",
+        "value": "860px"
+      },
+      {
+        "name": "tablet",
+        "value": "1000px"
+      },
+      {
+        "name": "desk-max",
+        "value": "1184px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal: Registrar solicitud, Pedir diagnóstico.",
+      "html": "<button class=\"ds-btn-primary\">Registrar solicitud</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; border: 0; border-radius: var(--radius-button); background: var(--brich-blue); color: var(--brich-white); font-family: var(--font-body); font-weight: 700; font-size: 18px; cursor: pointer; transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), filter 0.2s; } .ds-btn-primary:hover { filter: brightness(1.08); } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 2px solid var(--brich-blue); outline-offset: 3px; }"
+    },
+    {
+      "name": "Enlace subrayado",
+      "kind": "button",
+      "refersTo": "link-underline",
+      "description": "Acción secundaria: Ver ficha, Ingresar al portal, Registrar otra solicitud.",
+      "html": "<a class=\"ds-link\" href=\"#\">Ver ficha →</a>",
+      "css": ".ds-link { font-family: var(--font-body); font-size: 15px; font-weight: 600; color: var(--brich-navy); text-decoration: underline; text-decoration-color: var(--brich-blue); text-decoration-thickness: 2px; text-underline-offset: 4px; } .ds-link:hover { text-decoration-color: var(--brich-navy); } .ds-link:focus-visible { outline: 2px solid var(--brich-blue); outline-offset: 3px; }"
+    },
+    {
+      "name": "Campo en caja",
+      "kind": "input",
+      "refersTo": "field-box",
+      "description": "Celda de la grilla del formulario con rótulo dentro y control sin borde.",
+      "html": "<div class=\"ds-grid\"><label class=\"ds-field\"><span>Nombre</span><input /></label><label class=\"ds-field\"><span>Empresa</span><input /></label></div>",
+      "css": ".ds-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle); border-top: 1px solid var(--border-subtle); } .ds-field { display: grid; gap: 4px; padding: 12px 16px; background: var(--brich-white); transition: box-shadow 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-field span { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); } .ds-field input { border: 0; background: transparent; padding: 4px 0; min-height: 36px; font: inherit; font-size: 17px; color: var(--text-primary); outline: none; } .ds-field:hover { background: var(--brich-white); } .ds-field:focus-within { box-shadow: inset 0 0 0 2px var(--brich-blue); }"
+    },
+    {
+      "name": "Cabecera del sitio",
+      "kind": "nav",
+      "refersTo": "nav-header",
+      "description": "Cabecera blanca fija con navegación en mayúsculas y botón primario.",
+      "html": "<header class=\"ds-nav\"><strong class=\"ds-nav-logo\">[Logo.tsx]</strong><ul><li><a href=\"#\">Sistemas</a></li><li><a href=\"#\">Recorrido</a></li><li><a href=\"#\">Procedimiento</a></li></ul><a class=\"ds-nav-btn\" href=\"#\">Pedir diagnóstico</a></header>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 24px; padding: 16px; background: var(--brich-white); border-bottom: 1px solid var(--border-subtle); } .ds-nav-logo { font-family: var(--font-body); font-size: 12px; color: var(--text-secondary); } .ds-nav ul { display: flex; gap: 32px; margin: 0 0 0 auto; padding: 0; list-style: none; font-family: var(--font-body); font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; } .ds-nav ul a { color: var(--text-secondary); text-decoration: none; } .ds-nav ul a:hover { color: var(--brich-navy); } .ds-nav ul a:focus-visible { outline: 2px solid var(--brich-blue); outline-offset: 3px; } .ds-nav-btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 20px; border-radius: var(--radius-button); background: var(--brich-blue); color: var(--brich-white); font-family: var(--font-body); font-weight: 700; font-size: 18px; text-decoration: none; } .ds-nav-btn:hover { filter: brightness(1.08); }"
+    },
+    {
+      "name": "Hoja",
+      "kind": "card",
+      "refersTo": "sheet",
+      "description": "Contenedor de todo contenido: hoja blanca sobre escritorio Ice, partes separadas por reglas.",
+      "html": "<div class=\"ds-desk\"><article class=\"ds-sheet\"><section class=\"ds-part\"><h2>Procedimiento</h2><ul class=\"ds-rows\"><li>Diagnóstico</li><li>Diseño</li></ul></section></article></div>",
+      "css": ".ds-desk { background: var(--brich-ice); padding: 32px 16px; } .ds-sheet { background: var(--brich-white); border-radius: var(--radius-card); overflow: clip; box-shadow: 0 1px 2px color-mix(in srgb, var(--brich-navy) 6%, transparent), 0 16px 40px -16px color-mix(in srgb, var(--brich-navy) 20%, transparent); } .ds-part { padding: 40px 32px; } .ds-part h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.015em; color: var(--brich-navy); } .ds-rows { list-style: none; margin: 24px 0 0; padding: 0; border-top: 2px solid var(--brich-navy); font-family: var(--font-body); color: var(--brich-navy); } .ds-rows li { padding: 16px 0; border-bottom: 1px solid var(--border-subtle); }"
+    },
+    {
+      "name": "Sello RECIBIDA",
+      "kind": "custom",
+      "refersTo": "stamp",
+      "description": "Firma del mundo: se estampa en su casilla al registrar la solicitud.",
+      "html": "<div class=\"ds-slot\"><span class=\"ds-stamp\">Recibida<small>19/11/2026 · 13:50</small></span></div>",
+      "css": ".ds-slot { width: 200px; height: 88px; display: grid; place-items: center; border: 1.5px dashed var(--brich-steel); border-radius: 8px; } .ds-stamp { display: grid; justify-items: center; gap: 2px; padding: 8px 16px; border: 4px double var(--brich-blue); border-radius: 8px; background: color-mix(in srgb, var(--brich-cyan) 22%, var(--brich-white)); font-family: var(--font-display); font-weight: 800; font-size: 26px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brich-blue); transform: rotate(-5deg); animation: ds-estampar 420ms cubic-bezier(0.23, 1, 0.32, 1) both; } .ds-stamp small { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.02em; text-transform: none; color: var(--brich-navy); font-variant-numeric: tabular-nums; } .ds-slot:hover .ds-stamp { animation: ds-estampar 420ms cubic-bezier(0.23, 1, 0.32, 1) both; } @keyframes ds-estampar { from { opacity: 0; transform: rotate(-9deg) scale(1.35); filter: blur(6px); } 60% { opacity: 1; filter: blur(0); } to { opacity: 1; transform: rotate(-5deg) scale(1); filter: blur(0); } } @media (prefers-reduced-motion: reduce) { .ds-stamp { animation: none; } }"
+    },
+    {
+      "name": "Sello de estado",
+      "kind": "chip",
+      "refersTo": "status-seal",
+      "description": "Estado de cada evento en la bitácora demostrativa.",
+      "html": "<span class=\"ds-seal\">Asignada</span>",
+      "css": ".ds-seal { display: inline-block; padding: 1px 8px; border: 3px double var(--brich-blue); border-radius: 6px; background: color-mix(in srgb, var(--brich-blue) 8%, var(--brich-white)); font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brich-navy); }"
+    },
+    {
+      "name": "Etiqueta Demostrativo",
+      "kind": "chip",
+      "refersTo": "demo-tag",
+      "description": "Obligatoria junto a todo dato de ejemplo.",
+      "html": "<span class=\"ds-demo\">Demostrativo</span>",
+      "css": ".ds-demo { display: inline-block; padding: 2px 8px; border: 1px solid var(--brich-steel); border-radius: 4px; font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El comprobante numerado",
+    "overview": "La web pública de BRich no es una landing: es un documento de registro. Cada página es una hoja blanca apoyada sobre un escritorio Ice, escrita en tinta Navy, dividida por reglas finas como un formulario impreso, con cajas de datos, campos rotulados y una casilla donde se estampa el sello. La promesa del producto (ninguna consulta queda sin registro ni responsable) se demuestra con la forma: el visitante llena la solicitud en la primera hoja y la ve sellada como RECIBIDA, con la fecha y la hora reales.\n\nLa densidad es la de un papel administrativo bien hecho: mucha información ordenada en filas, columnas y reglas, nunca en tarjetas sueltas. La jerarquía la dan el asunto en Montserrat 800, las reglas gruesas Navy que abren cada tabla o lista, y los rótulos pequeños en mayúsculas. El color es casi monocromo (Navy sobre blanco y Ice); BRich Blue marca acción y estado, y el Cyan existe solo como tinta del sello.\n\nEste mundo reemplaza el aspecto anterior (una landing SaaS genérica con fondos navy). Rechaza de forma explícita el héroe dividido con tarjeta de producto y la fila de tres tarjetas iguales.",
+    "keyCharacteristics": [
+      "Hojas blancas (radio 12px, sombra suave) sobre escritorio Ice.",
+      "Secciones como partes de un documento, separadas por reglas de 1px `--border-subtle`; tablas y listas abren con una regla Navy de 2px.",
+      "Formulario como grilla de campos en caja con rótulo en mayúsculas dentro de la caja.",
+      "Sellos de estado con borde doble en BRich Blue; el sello RECIBIDA se estampa al enviar.",
+      "Cifras tabulares en horas, fechas y numerales."
+    ],
+    "rules": [
+      {
+        "name": "Regla de la tinta de sello",
+        "body": "El Cyan es tinta de sello: su único uso visible es el fondo del sello RECIBIDA. Ni fondos, ni íconos, ni acentos, ni foco. (El resaltado de selección de texto usa hoy una mezcla de Cyan al 45%; es la única excepción presente en el código y no se extiende a nada más.)",
+        "section": "colors"
+      },
+      {
+        "name": "Regla del token",
+        "body": "Ningún color se escribe como HEX o `rgba()` en un componente. Si hace falta un tono nuevo, se deriva de un token con `color-mix()` en `site.css`, como `--tint-blue` y `--tint-cyan`.",
+        "section": "colors"
+      },
+      {
+        "name": "Regla del azul que habla",
+        "body": "BRich Blue con texto blanco encima solo existe en el botón primario (18px bold). Párrafos y textos pequeños van siempre en Navy o en `--text-secondary` sobre claro.",
+        "section": "colors"
+      },
+      {
+        "name": "Regla del asunto",
+        "body": "Montserrat 800 se reserva para el asunto de la hoja y para el sello. Ningún otro título sube a 800.",
+        "section": "typography"
+      },
+      {
+        "name": "Regla de las cifras tabulares",
+        "body": "Horas, fechas, numerales de etapa y códigos de país usan `font-variant-numeric: tabular-nums` (clase `.num`), como en un comprobante.",
+        "section": "typography"
+      },
+      {
+        "name": "Regla de la hoja",
+        "body": "Todo contenido vive dentro de una hoja. Las secciones se separan con reglas, nunca con tarjetas sueltas ni bloques de color a sangre.",
+        "section": "layout"
+      },
+      {
+        "name": "Regla de la regla gruesa",
+        "body": "Cada lista o tabla de datos abre con una regla Navy de 2px; sus filas se separan con reglas de 1px `--border-subtle`.",
+        "section": "layout"
+      },
+      {
+        "name": "Regla de una sola elevación",
+        "body": "Solo la hoja proyecta sombra (más el menú flotante del selector de país). Campos, filas, sellos y botones son planos.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do tomar todos los colores de `src/styles/tokens.css` y derivar tintes con `color-mix()` a partir de esos tokens.",
+      "Do poner cada contenido nuevo dentro de una hoja (`.sheet`), como una parte con su regla superior.",
+      "Do abrir cada tabla o lista de datos con la regla Navy de 2px y separar filas con reglas de 1px `--border-subtle`.",
+      "Do usar el borde doble en BRich Blue para cualquier estado (sello de estado de 3px, sello de 4px).",
+      "Do escribir horas, fechas y numerales con cifras tabulares (`.num`).",
+      "Do etiquetar como \"Demostrativo\" todo nombre, hora o dato de ejemplo.",
+      "Do usar el logo solo mediante `src/components/Logo.tsx`, con al menos 120px de ancho.",
+      "Do respetar el botón primario de marca: BRich Blue, 48px, radio 8px, texto blanco 18px bold."
+    ],
+    "donts": [
+      "Don't construir un héroe dividido con tarjeta de producto ni una fila de tres tarjetas iguales.",
+      "Don't usar Cyan fuera del sello RECIBIDA.",
+      "Don't escribir HEX o `rgba()` sueltos en componentes.",
+      "Don't usar Acero (`--brich-steel`) para texto pequeño; los rótulos van en `--text-secondary`.",
+      "Don't poner párrafos o textos pequeños en blanco sobre BRich Blue.",
+      "Don't usar Montserrat 800 fuera del asunto y del sello.",
+      "Don't añadir sombras dentro de la hoja; la única elevación es la hoja sobre el escritorio.",
+      "Don't usar la clase `.eyebrow`, `.btn-ghost`, `.on-navy` ni el encabezado navy de `globals.css` en este mundo: pertenecen al estilo anterior que aún usan portal, login, `/f/[slug]` y alta.",
+      "Don't escribir \"BRich\" con una fuente como si fuera el logo."
+    ]
+  }
+}
