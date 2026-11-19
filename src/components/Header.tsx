@@ -16,7 +16,7 @@ export function Header() {
             <li><Link href="/login">Ingresar</Link></li>
           </ul>
         </nav>
-        <Link className="btn btn-primary" href="/#solicitud">
+        <Link className="btn btn-primary" href="/#campos">
           Pedir diagnóstico
         </Link>
       </div>

@@ -51,14 +51,14 @@ export default async function SystemPage({ params }: { params: Promise<{ slug: s
           <Link className="volver" href="/#sistemas">← Todos los sistemas</Link>
           <h1 id="sistema-title">{s.title}</h1>
           <p>{s.summary}</p>
-          <Link className="btn btn-primary" href="#solicitud">Pedir diagnóstico</Link>
+          <Link className="btn btn-primary" href="#campos">Pedir diagnóstico</Link>
         </div>
 
         <section className="part">
           <h2>Lo que resuelve</h2>
           <ul className="obs">
             {s.problems.map((p) => (
-              <li key={p}><p className="obs-solo">{p}</p></li>
+              <li key={p} className="obs-solo"><p>{p}</p></li>
             ))}
           </ul>
         </section>
@@ -68,8 +68,7 @@ export default async function SystemPage({ params }: { params: Promise<{ slug: s
           <ol className="etapas">
             {s.howItWorks.map((h, i) => (
               <li key={h.title}>
-                <span className="etapa num">Paso {i + 1}</span>
-                <h3>{h.title}</h3>
+                <h3><span className="num">{i + 1}</span> · {h.title}</h3>
                 <p>{h.text}</p>
               </li>
             ))}

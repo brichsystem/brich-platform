@@ -35,7 +35,7 @@ export default function Home() {
   return (
     <div className="desk">
       <Solicitud
-        title="Cada consulta de tu empresa, con número, responsable y seguimiento."
+        title="Cada consulta de tu empresa, registrada, con responsable y seguimiento."
         intro="BRich diseña, implementa y administra el sistema; tu equipo lo usa sin tocar la parte técnica. Registra tu solicitud y en 30 minutos revisamos cómo trabajas hoy."
       />
 
@@ -133,8 +133,7 @@ export default function Home() {
           <ol className="etapas">
             {procedimiento.map((p, i) => (
               <li key={p.title}>
-                <span className="etapa num">Etapa {i + 1}</span>
-                <h3>{p.title}</h3>
+                <h3><span className="num">{i + 1}</span> · {p.title}</h3>
                 <p>{p.text}</p>
               </li>
             ))}
@@ -156,7 +155,7 @@ export default function Home() {
 
         <footer className="cierre">
           <p>Fin del documento. Si algo de esto pasa en tu empresa, empecemos por el diagnóstico.</p>
-          <Link className="btn btn-primary" href="#solicitud">Registrar solicitud</Link>
+          <Link className="btn btn-primary" href="#campos">Registrar solicitud</Link>
         </footer>
       </article>
     </div>

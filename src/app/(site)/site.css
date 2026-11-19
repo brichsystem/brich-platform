@@ -10,6 +10,7 @@
   --rule: 1px solid var(--border-subtle);
   --rule-strong: 2px solid var(--brich-navy);
   --tint-blue: color-mix(in srgb, var(--brich-blue) 8%, var(--brich-white));
+  --tint-cyan: color-mix(in srgb, var(--brich-cyan) 22%, var(--brich-white));
 }
 
 body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-color: var(--brich-steel) var(--brich-ice); }
@@ -33,7 +34,8 @@ body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-c
 .nav ul { color: var(--text-secondary); letter-spacing: 0.04em; }
 .nav ul a:hover { color: var(--brich-navy); }
 @media (max-width: 860px) { .site-header nav { display: none; } .nav .btn { margin-left: auto; } }
-@media (max-width: 420px) { .nav .btn { display: inline-flex; font-size: 14px; padding: 0 12px; } }
+.nav .btn { min-height: 48px; font-size: 18px; padding: 0 20px; }
+@media (max-width: 420px) { .nav .btn { display: inline-flex; padding: 0 16px; } .logo img { height: 32px; } }
 
 .site-footer { background: var(--brich-white); border-top: var(--rule); color: var(--text-secondary); }
 .site-footer .wrap { color: var(--text-secondary); }
@@ -46,7 +48,7 @@ body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-c
 }
 .sheet {
   background: var(--brich-white); border-radius: var(--radius-card); overflow: clip;
-  box-shadow: 0 1px 2px rgba(11, 23, 38, 0.06), 0 16px 40px -16px rgba(11, 23, 38, 0.2);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--brich-navy) 6%, transparent), 0 16px 40px -16px color-mix(in srgb, var(--brich-navy) 20%, transparent);
   scroll-margin-top: 96px;
 }
 
@@ -79,6 +81,7 @@ body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-c
 .volver:hover { text-decoration: underline; text-decoration-color: var(--brich-blue); text-underline-offset: 4px; }
 
 /* ---------- Formulario como grilla de campos ---------- */
+.ficha { scroll-margin-top: 96px; }
 .ficha .form {
   display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px;
   background: var(--border-subtle); border: 0; border-top: var(--rule); border-radius: 0; padding: 0;
@@ -116,7 +119,7 @@ body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-c
 .sello-casilla > span:not(.sello) { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }
 .sello {
   display: grid; justify-items: center; gap: 2px; padding: 8px 16px;
-  border: 4px double var(--brich-blue); border-radius: 8px; background: var(--tint-blue);
+  border: 4px double var(--brich-blue); border-radius: 8px; background: var(--tint-cyan);
   font-family: var(--font-display); font-weight: 800; font-size: 26px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--brich-blue); transform: rotate(-5deg);
   animation: estampar 420ms var(--ease-out) both;
@@ -151,13 +154,13 @@ body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-c
 .h-sub { font-weight: 700; font-size: 18px !important; margin-bottom: 12px; }
 .h-sub ~ .h-sub { margin-top: 24px; }
 
-/* Observaciones en columnas con reglas */
-.obs { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--rule-strong); }
-.obs li { padding: 16px 24px 0 0; display: grid; gap: 8px; align-content: start; }
-.obs li + li { border-left: var(--rule); padding-left: 24px; }
+/* Observaciones como filas del documento */
+.obs { list-style: none; margin: 24px 0 0; padding: 0; border-top: var(--rule-strong); }
+.obs li { display: grid; grid-template-columns: minmax(200px, 1fr) 2fr; gap: 24px; padding: 16px 0; border-bottom: var(--rule); align-items: baseline; }
 .obs h3 { font-weight: 700; font-size: 18px; }
-.obs p { font-size: 15px; color: var(--text-secondary); }
-.obs .obs-solo { font-size: 16px; color: var(--text-primary); }
+.obs p { font-size: 16px; color: var(--text-secondary); max-width: 62ch; }
+.obs li.obs-solo { grid-template-columns: 1fr; }
+.obs li.obs-solo p { color: var(--text-primary); }
 
 /* Tabla de sistemas */
 .tabla { margin-top: 24px; border-top: var(--rule-strong); }
@@ -182,8 +185,8 @@ body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-c
 .quien { font-size: 14px; color: var(--text-secondary); }
 .estado {
   justify-self: start; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--brich-navy); border: 1.5px solid var(--brich-blue); background: var(--tint-blue);
-  border-radius: 6px; padding: 2px 10px; transform: rotate(-1.5deg);
+  color: var(--brich-navy); border: 3px double var(--brich-blue); background: var(--tint-blue);
+  border-radius: 6px; padding: 1px 8px;
 }
 
 /* Condiciones en dos columnas */
@@ -200,8 +203,8 @@ body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-c
 .etapas { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-top: var(--rule-strong); }
 .etapas li { padding: 16px 24px 0 0; display: grid; gap: 6px; align-content: start; }
 .etapas li + li { border-left: var(--rule); padding-left: 24px; }
-.etapa { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
 .etapas h3 { font-weight: 700; font-size: 18px; }
+.etapas h3 .num { color: var(--brich-blue); }
 .etapas p { font-size: 15px; color: var(--text-secondary); }
 
 .copia { margin-top: 16px; display: grid; gap: 16px; justify-items: start; }
@@ -230,12 +233,11 @@ body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-c
   .emisor { border-right: 0; border-bottom: var(--rule); gap: 16px; }
   .emisor span { font-size: 13px; }
   .emisor img { display: none; }
-  .datos .fecha { display: none; }
   .asunto { padding: 24px 16px; }
   .asunto p { font-size: 17px; }
   .ficha .field, .ficha .field[data-field="system"] { grid-column: 1 / -1; padding: 12px 16px; }
   .ficha .form-foot { grid-template-columns: 1fr; padding: 16px; gap: 16px; }
-  .ficha .form-foot > .sello-casilla { display: none; }
+  .ficha .form-foot > .sello-casilla { height: 72px; }
   .ficha .form-actions { grid-template-columns: 1fr; }
   .ficha .form-actions .btn, .ficha .form-actions .form-legal { grid-column: 1; min-width: 0; }
   .registrada { grid-template-columns: 1fr; gap: 24px; padding: 24px 16px; }
@@ -245,9 +247,10 @@ body { background: var(--brich-ice); caret-color: var(--brich-blue); scrollbar-c
   .pista li::before { top: 2px; left: -7px; }
   .pista li span { padding-top: 0; }
   .part { padding: 32px 16px; }
-  .obs, .condiciones, .etapas { grid-template-columns: 1fr; }
-  .obs li + li, .condiciones > div + div, .etapas li + li { border-left: 0; padding-left: 0; border-top: var(--rule); margin-top: 16px; }
-  .obs li, .condiciones > div, .etapas li { padding-right: 0; }
+  .obs li { grid-template-columns: 1fr; gap: 6px; }
+  .condiciones, .etapas { grid-template-columns: 1fr; }
+  .condiciones > div + div, .etapas li + li { border-left: 0; padding-left: 0; border-top: var(--rule); margin-top: 16px; }
+  .condiciones > div, .etapas li { padding-right: 0; }
   .tabla-cab { display: none; }
   .tabla-fila, .tabla-fila.tabla-corta { grid-template-columns: 1fr; gap: 12px; }
   .tabla-fila > .para { display: block; }

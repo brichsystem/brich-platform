@@ -59,8 +59,8 @@ export function Solicitud({
           <div className="box datos">
             <p className="datos-title">Solicitud de diagnóstico</p>
             <dl>
-              <dt>N.º</dt>
-              <dd>Se asigna al registrar</dd>
+              <dt>Registro</dt>
+              <dd>Con fecha y hora al enviar</dd>
               <dt className="fecha">Fecha</dt>
               <dd className="fecha num"><Today /></dd>
               <dt>Modalidad</dt>
@@ -77,7 +77,7 @@ export function Solicitud({
         <p>{intro}</p>
       </div>
 
-      <div className="ficha">
+      <div className="ficha" id="campos">
         <LeadForm
           options={systems.map((s) => s.name)}
           defaultOption={defaultSystem}
